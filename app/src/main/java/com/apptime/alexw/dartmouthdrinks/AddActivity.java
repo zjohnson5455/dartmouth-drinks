@@ -12,6 +12,7 @@ public class AddActivity extends AppCompatActivity {
 
     Button mResourceButton;
     ImageView mCupImageView;
+    ImageView mPongImageView;
     Context mContext;
 
     @Override
@@ -22,6 +23,8 @@ public class AddActivity extends AppCompatActivity {
 
         mResourceButton = findViewById(R.id.resourceButton);
         mCupImageView = findViewById(R.id.cupImageView);
+        mPongImageView = findViewById(R.id.pongImageView);
+
 
         mResourceButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,5 +41,15 @@ public class AddActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        mPongImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, PongActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 }

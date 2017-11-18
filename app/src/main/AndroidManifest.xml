@@ -16,8 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BeerActivity"></activity>
-        <activity android:name=".ResourcesActivity"></activity>
+        <activity android:name=".BeerActivity" />
+        <activity android:name=".ResourcesActivity" />
+        <activity android:name=".PongActivity"></activity>
     </application>
 
 </manifest>
