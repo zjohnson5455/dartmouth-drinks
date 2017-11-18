@@ -7,7 +7,7 @@ import android.os.Bundle;
  * Created by zacharyjohnson on 11/17/17.
  */
 
-public class Resources_Activity extends Activity{
+public class ResourcesActivity extends Activity{
 
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

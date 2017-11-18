@@ -46,6 +46,8 @@
             android:text="646-4000"
             android:textSize="25dp"
             android:paddingRight="10dp"
+            android:autoLink="phone"
+            android:linksClickable="true"
             />
 
     </RelativeLayout>
@@ -74,6 +76,8 @@
             android:text="911"
             android:textSize="25dp"
             android:paddingRight="10dp"
+            android:autoLink="phone"
+            android:linksClickable="true"
             />
 
     </RelativeLayout>
@@ -90,6 +94,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:autoLink="web"
         android:text="@string/Good_Sam"/>
 
 
