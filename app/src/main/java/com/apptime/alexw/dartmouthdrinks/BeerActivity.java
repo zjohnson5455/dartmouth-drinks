@@ -26,13 +26,19 @@ public class BeerActivity extends AppCompatActivity {
         mHalFBeer = findViewById(R.id.halfImageView);
         mQuarterBeer = findViewById(R.id.quarterImageView);
 
+        final Intent result = new Intent("DRINK");
+        result.putExtra("pct", .045);
+
         mFullBeer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //todo: actually make this do something
                 Toast.makeText(mContext, "Full Beer Added", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, AddActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(mContext, AddActivity.class);
+//                startActivity(intent);
+                result.putExtra("amt", 12);
+                setResult(Constants.ADD_DRINK_RESULT_CODE, result);
+                finish();
             }
         });
 
@@ -41,8 +47,11 @@ public class BeerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //todo: actually make this do something
                 Toast.makeText(mContext, "Half Beer Added", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, AddActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(mContext, AddActivity.class);
+//                startActivity(intent);
+                result.putExtra("amt", 0.5);
+                setResult(Constants.ADD_DRINK_RESULT_CODE, result);
+                finish();
             }
         });
 
@@ -51,8 +60,11 @@ public class BeerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //todo: actually make this do something
                 Toast.makeText(mContext, "Quarter Beer Added", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(mContext, AddActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent(mContext, AddActivity.class);
+//                startActivity(intent);
+                result.putExtra("amt", 0.25);
+                setResult(Constants.ADD_DRINK_RESULT_CODE, result);
+                finish();
             }
         });
 

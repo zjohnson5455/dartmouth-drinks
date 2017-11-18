@@ -38,7 +38,7 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, BeerActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, Constants.ADD_DRINK_RESULT_CODE);
             }
         });
 
