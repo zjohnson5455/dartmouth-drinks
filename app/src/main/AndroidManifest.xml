@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddActivity">
+        <activity android:name=".CreateAcctActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +19,7 @@
         <activity android:name=".BeerActivity" />
         <activity android:name=".ResourcesActivity" />
         <activity android:name=".PongActivity"></activity>
-        <activity android:name=".Create_Acct_Activity">
+        <activity android:name=".AddActivity">
             <intent-filter>
                 <action android:name="CREATE"/>
                 <category android:name="android.intent.category.DEFAULT"/>
