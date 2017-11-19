@@ -46,7 +46,7 @@ public class TimeDrinkActivity extends FragmentActivity {
 //        //TODO do something with these new times and fix midnight problem
 //        if (time_off > 60) {
 //            int sub_hours = time_off/60;
-//            int subtract = sub_hours * 60;
+//            int subtract = sub_hours * 60 ;
 //            int min_off = time_off - subtract;
 //            int new_hour = hour - sub_hours;
 //            int new_min = min - min_off;
