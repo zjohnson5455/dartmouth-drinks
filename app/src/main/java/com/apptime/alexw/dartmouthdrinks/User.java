@@ -9,17 +9,15 @@ import java.util.List;
 
 public class User {
 
-    private String email;
-    private String password;
+    private String userId;
     private String name;
     private int weight;
     private boolean male;
     private double bac;
     private List<OnNight> history;
 
-    public User (String email, String password, String name, int weight, boolean male){
-        this.email = email;
-        this.password = password;
+    public User (String userId, String name, int weight, boolean male){
+        this.userId = userId;
         this.name = name;
         this.weight = weight;
         this.male = male;
@@ -31,12 +29,8 @@ public class User {
         history.add(night);
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
+    public String getUserId() {
+        return userId;
     }
 
     public String getName() {

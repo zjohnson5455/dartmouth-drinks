@@ -6,11 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 public class AddActivity extends AppCompatActivity {
 
     Button mResourceButton;
+    ImageButton mSettingsImageButton;
     ImageView mCupImageView;
     ImageView mPongImageView;
     Context mContext;
@@ -22,6 +24,7 @@ public class AddActivity extends AppCompatActivity {
         mContext = this;
 
         mResourceButton = findViewById(R.id.resourceButton);
+        mSettingsImageButton = findViewById(R.id.settingsImageButton);
         mCupImageView = findViewById(R.id.cupImageView);
         mPongImageView = findViewById(R.id.pongImageView);
 
@@ -30,6 +33,14 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, ResourcesActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mSettingsImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, SettingsActivity.class);
                 startActivity(intent);
             }
         });
