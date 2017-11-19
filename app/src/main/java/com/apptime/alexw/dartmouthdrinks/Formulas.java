@@ -6,7 +6,7 @@ package com.apptime.alexw.dartmouthdrinks;
 
 public class Formulas {
 
-    public static double calculateBac(boolean male, int weight, double prevBac, double alcohol, int timeSinceCalc, int timeSinceDrink) {
+    public static double calculateBac (boolean male, int weight, double prevBac, double alcohol, int timeSinceCalc, int timeSinceDrink) {
         double bacAtDrink = bacMetabolism(prevBac, timeSinceCalc - timeSinceDrink);
         double changeInBac;
 
@@ -23,11 +23,19 @@ public class Formulas {
         return prevBac - (minToHours(timeDiff) * Constants.ALCOHOL_METABOLISM_RATE);
     }
 
-    public static double lbsToGrams(int weight){
+    public static double drinkAlcoholContent (double amount, double percent){
+        return flOzToGrams(amount) * percent;
+    }
+
+    public static double lbsToGrams (int weight){
         return weight * Constants.GRAMS_PER_POUND;
     }
 
-    public static double minToHours(int minutes){
+    public static double flOzToGrams (double amount){
+        return amount * Constants.GRAMS_PER_FL_OZ;
+    }
+
+    public static double minToHours (int minutes){
         return ((double)minutes)/60.0;
     }
 }

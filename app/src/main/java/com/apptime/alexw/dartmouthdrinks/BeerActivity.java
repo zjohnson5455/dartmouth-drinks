@@ -37,7 +37,8 @@ public class BeerActivity extends AppCompatActivity {
 //                Intent intent = new Intent(mContext, AddActivity.class);
 //                startActivity(intent);
                 result.putExtra("amt", 12);
-                setResult(Constants.ADD_DRINK_RESULT_CODE, result);
+                result.putExtra("name", "Full beer");
+                setResult(Constants.ADD_DRINK_REQUEST_CODE, result);
                 finish();
             }
         });
@@ -49,8 +50,9 @@ public class BeerActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "Half Beer Added", Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(mContext, AddActivity.class);
 //                startActivity(intent);
-                result.putExtra("amt", 0.5);
-                setResult(Constants.ADD_DRINK_RESULT_CODE, result);
+                result.putExtra("amt", 6);
+                result.putExtra("name", "Half beer");
+                setResult(Constants.ADD_DRINK_REQUEST_CODE, result);
                 finish();
             }
         });
@@ -62,8 +64,9 @@ public class BeerActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "Quarter Beer Added", Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(mContext, AddActivity.class);
 //                startActivity(intent);
-                result.putExtra("amt", 0.25);
-                setResult(Constants.ADD_DRINK_RESULT_CODE, result);
+                result.putExtra("amt", 3);
+                result.putExtra("name", "Quarter beer");
+                setResult(Constants.ADD_DRINK_REQUEST_CODE, result);
                 finish();
             }
         });

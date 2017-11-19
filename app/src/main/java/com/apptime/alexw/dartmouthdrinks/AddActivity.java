@@ -38,7 +38,7 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, BeerActivity.class);
-                startActivityForResult(intent, Constants.ADD_DRINK_RESULT_CODE);
+                startActivityForResult(intent, Constants.ADD_DRINK_REQUEST_CODE);
             }
         });
 
@@ -51,6 +51,14 @@ public class AddActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.ADD_DRINK_REQUEST_CODE && resultCode == RESULT_OK) {
+//            Drink drink = new Drink(data.getStringExtra("name"), data.get)
+
+        }
     }
 
     public void onBACClick(View v) {
