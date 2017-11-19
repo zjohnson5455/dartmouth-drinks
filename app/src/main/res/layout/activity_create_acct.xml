@@ -1,104 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <Button
-        android:id="@+id/create_acct_clear"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_alignParentRight="true"
-        android:clickable="true"
-        android:text="Clear"
-        android:textSize="18dp"
-        android:onClick="createOnClearClick"
-        >
-    </Button>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <RelativeLayout
         android:orientation="vertical"
-        >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Name"
-            android:textSize="24dp"
-            android:gravity="center_horizontal"
-            />
-
-        <EditText
-            android:id="@+id/create_acct_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24dp"
-            android:maxLines="1"
-            android:singleLine="true"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24dp"
-            android:text="Password"
-            android:gravity="center_horizontal"
-            />
-
-        <EditText
-            android:id="@+id/create_acct_password"
-            android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24dp"
-            android:maxLines="1"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24dp"
-            android:text="Verify Password"
-            android:gravity="center_horizontal"
-            />
-
-        <EditText
-            android:id="@+id/reconfirm_password"
-            android:inputType="textPassword"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="24dp"
-            android:maxLines="1"
-            />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/sign_in_button"
-            android:layout_width="wrap_content"
+            android:id="@+id/create_acct_clear"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Next"
-            android:textSize="18dp"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
             android:clickable="true"
-            android:onClick="onNextClick"
-            />
+            android:text="Clear"
+            android:textSize="18dp"
+            android:onClick="createOnClearClick"
+            >
+        </Button>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:clickable="true"
-            android:textSize="22dp"
-            android:text="I already have an account"
-            android:gravity="center"
-            android:onClick="onSignInClick"
-            />
+            android:layout_centerVertical="true"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textSize="24dp"
+                android:gravity="center_horizontal"
+                />
+
+            <EditText
+                android:id="@+id/create_acct_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:maxLines="1"
+                android:singleLine="true"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textSize="24dp"
+                android:gravity="center_horizontal"/>
+
+            <EditText
+                android:id="@+id/create_acct_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:gravity="center_horizontal"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:text="Password"
+                android:gravity="center_horizontal"
+                />
+
+            <EditText
+                android:id="@+id/create_acct_password"
+                android:inputType="textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:maxLines="1"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:text="Verify Password"
+                android:gravity="center_horizontal"
+                />
+
+            <EditText
+                android:id="@+id/reconfirm_password"
+                android:inputType="textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:maxLines="1"
+                />
+
+            <Button
+                android:id="@+id/sign_in_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Next"
+                android:textSize="18dp"
+                android:clickable="true"
+                android:onClick="onNextClick"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:clickable="true"
+                android:textSize="22dp"
+                android:text="I already have an account"
+                android:gravity="center"
+                android:onClick="onSignInClick"
+                />
 
 
-    </LinearLayout>
+        </LinearLayout>
 
+    </RelativeLayout>
 
-
-</RelativeLayout>
+</ScrollView>
