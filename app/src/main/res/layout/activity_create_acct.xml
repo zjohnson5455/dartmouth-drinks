@@ -29,33 +29,17 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Name"
-                android:textSize="24dp"
                 android:gravity="center_horizontal"
-                />
-
-            <EditText
-                android:id="@+id/create_acct_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:maxLines="1"
-                android:singleLine="true"
-                />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Email"
-                android:textSize="24dp"
-                android:gravity="center_horizontal"/>
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:textSize="24dp" />
 
             <EditText
                 android:id="@+id/create_acct_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:gravity="center_horizontal"/>
+                android:gravity="center_horizontal"
+                android:textSize="24dp" />
 
             <TextView
                 android:layout_width="match_parent"

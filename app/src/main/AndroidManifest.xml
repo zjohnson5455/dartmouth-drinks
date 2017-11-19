@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddActivity">
+        <activity android:name=".CreateAcctActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,33 +18,29 @@
         </activity>
         <activity android:name=".BeerActivity" />
         <activity android:name=".ResourcesActivity" />
-        <activity android:name=".PongActivity" />
-        <activity android:name=".Create_Acct_Activity">
+        <activity android:name=".PongActivity"></activity>
+        <activity android:name=".AddActivity">
             <intent-filter>
-                <action android:name="CREATE" />
-
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="ADD"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity android:name=".CreateNextActivity">
             <intent-filter>
-                <action android:name="NEXT" />
-
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="NEXT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity android:name=".SignInActivity">
             <intent-filter>
-                <action android:name="SIGN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="SIGN"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity android:name=".BACInfo">
             <intent-filter>
-                <action android:name="INFO" />
-
-                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="INFO"/>
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
         <activity android:name=".SettingsActivity"/>

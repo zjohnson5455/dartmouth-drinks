@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "319076097700",
+    "firebase_url": "https://dartmouthdrinks.firebaseio.com",
+    "project_id": "dartmouthdrinks",
+    "storage_bucket": "dartmouthdrinks.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:319076097700:android:0d3ce63a4696d470",
+        "android_client_info": {
+          "package_name": "com.apptime.alexw.dartmouthdrinks"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "319076097700-nl7idshfcetnv3tv771obrt8j63jko98.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apptime.alexw.dartmouthdrinks",
+            "certificate_hash": "81024c9670eb3e92e04a5832ff880f18dd8ea3fa"
+          }
+        },
+        {
+          "client_id": "319076097700-vqf1k6qd4bj2lmjnc4730ahvm2nm2ve0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4E4fTz76z4WMgjklrCylHQlcUL5sa6PE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "319076097700-vqf1k6qd4bj2lmjnc4730ahvm2nm2ve0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
