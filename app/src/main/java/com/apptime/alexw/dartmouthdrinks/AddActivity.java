@@ -52,4 +52,9 @@ public class AddActivity extends AppCompatActivity {
 
 
     }
+
+    public void onBACClick(View v) {
+        Intent info = new Intent("INFO");
+        startActivity(info);
+    }
 }
