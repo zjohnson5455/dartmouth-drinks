@@ -3,6 +3,7 @@ package com.apptime.alexw.dartmouthdrinks;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -11,7 +12,7 @@ import android.widget.Spinner;
  * Created by zacharyjohnson on 11/18/17.
  */
 
-public class CreateNextActivity extends Activity {
+public class CreateNextActivity extends AppCompatActivity {
 
     Spinner sex = findViewById(R.id.create_acct_sex);
 

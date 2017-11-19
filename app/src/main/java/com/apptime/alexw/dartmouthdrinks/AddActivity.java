@@ -13,6 +13,9 @@ public class AddActivity extends AppCompatActivity {
     Button mResourceButton;
     ImageView mCupImageView;
     ImageView mPongImageView;
+    ImageView mCanImageView;
+    ImageView mShotImageView;
+    ImageView mWineImageView;
     Context mContext;
 
     @Override
@@ -24,6 +27,10 @@ public class AddActivity extends AppCompatActivity {
         mResourceButton = findViewById(R.id.resourceButton);
         mCupImageView = findViewById(R.id.cupImageView);
         mPongImageView = findViewById(R.id.pongImageView);
+        mCanImageView = findViewById(R.id.canImageView);
+        mShotImageView = findViewById(R.id.shotImageView);
+        mWineImageView = findViewById(R.id.wineImageView);
+
 
 
         mResourceButton.setOnClickListener(new View.OnClickListener() {
@@ -46,9 +53,44 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, PongActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, Constants.ADD_DRINK_REQUEST_CODE);
             }
         });
+
+        mCanImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, TimeDrinkActivity.class);
+                intent.putExtra("name", "Can of beer");
+                intent.putExtra("amount", 12.0);
+                intent.putExtra("percent", .045);
+                startActivityForResult(intent, Constants.TIME_REQUEST_CODE);
+            }
+        });
+
+        mShotImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, TimeDrinkActivity.class);
+                intent.putExtra("name", "Shot");
+                intent.putExtra("amount", 1.5);
+                intent.putExtra("percent", .4);
+                startActivityForResult(intent, Constants.TIME_REQUEST_CODE);
+            }
+        });
+
+        mWineImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, TimeDrinkActivity.class);
+                intent.putExtra("name", "Glass of wine");
+                intent.putExtra("amount", 5);
+                intent.putExtra("percent", .12);
+                startActivityForResult(intent, Constants.TIME_REQUEST_CODE);
+            }
+        });
+
+
 
 
     }
@@ -56,7 +98,10 @@ public class AddActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == Constants.ADD_DRINK_REQUEST_CODE && resultCode == RESULT_OK) {
-//            Drink drink = new Drink(data.getStringExtra("name"), data.get)
+
+        }
+
+        if (requestCode == Constants.TIME_REQUEST_CODE && resultCode == RESULT_OK) {
 
         }
     }

@@ -14,5 +14,6 @@ public class Constants {
     static final double FEMALE_BAC_CONSTANT = .55;
 
     static final int ADD_DRINK_REQUEST_CODE = 1;
+    static final int TIME_REQUEST_CODE = 2;
 
 }

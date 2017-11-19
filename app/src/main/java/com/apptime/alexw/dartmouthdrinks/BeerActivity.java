@@ -26,7 +26,7 @@ public class BeerActivity extends AppCompatActivity {
         mHalFBeer = findViewById(R.id.halfImageView);
         mQuarterBeer = findViewById(R.id.quarterImageView);
 
-        final Intent result = new Intent("DRINK");
+        final Intent result = new Intent(this, TimeDrinkActivity.class);
         result.putExtra("pct", .045);
 
         mFullBeer.setOnClickListener(new View.OnClickListener() {
@@ -36,10 +36,9 @@ public class BeerActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "Full Beer Added", Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(mContext, AddActivity.class);
 //                startActivity(intent);
-                result.putExtra("amt", 12);
-                result.putExtra("name", "Full beer");
-                setResult(Constants.ADD_DRINK_REQUEST_CODE, result);
-                finish();
+                result.putExtra("amt", 12.0);
+                result.putExtra("name", "Full cup of beer");
+                startActivityForResult(result, Constants.TIME_REQUEST_CODE);
             }
         });
 
@@ -50,10 +49,9 @@ public class BeerActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "Half Beer Added", Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(mContext, AddActivity.class);
 //                startActivity(intent);
-                result.putExtra("amt", 6);
-                result.putExtra("name", "Half beer");
-                setResult(Constants.ADD_DRINK_REQUEST_CODE, result);
-                finish();
+                result.putExtra("amt", 6.0);
+                result.putExtra("name", "Half cup of beer");
+                startActivityForResult(result, Constants.TIME_REQUEST_CODE);
             }
         });
 
@@ -64,13 +62,20 @@ public class BeerActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "Quarter Beer Added", Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(mContext, AddActivity.class);
 //                startActivity(intent);
-                result.putExtra("amt", 3);
-                result.putExtra("name", "Quarter beer");
-                setResult(Constants.ADD_DRINK_REQUEST_CODE, result);
-                finish();
+                result.putExtra("amt", 3.0);
+                result.putExtra("name", "Quarter cup of beer");
+                startActivityForResult(result, Constants.TIME_REQUEST_CODE);
             }
         });
-
-
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == Constants.TIME_REQUEST_CODE && resultCode == RESULT_OK) {
+            setResult(RESULT_OK, data);
+            finish();
+        }
+    }
+
 }
