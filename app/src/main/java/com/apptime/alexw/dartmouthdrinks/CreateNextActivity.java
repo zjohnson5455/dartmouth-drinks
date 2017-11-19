@@ -28,8 +28,8 @@ public class CreateNextActivity extends Activity {
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
 
-
-    public void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_next);
 
@@ -57,20 +57,25 @@ public class CreateNextActivity extends Activity {
         if (mNameEditText.getText().toString().length() != 0 && mWeightEditText.getText().toString().length() != 0 && !mSexSpinner.getSelectedItem().toString().equals("---")){
             //do a thing: user initialise
 
-            //User user = new User()
-            //mDatabase.child("users").child(currentUser.getUid()).setValue(user);
+            String UID = currentUser.getUid();
+            String name = mNameEditText.getText().toString();
+            int weight = Integer.valueOf(mWeightEditText.getText().toString());
+            Boolean maleBool = mSexSpinner.getSelectedItem().toString().equals("Male");
+
+            User user = new User(UID, name, weight, maleBool);
+            mDatabase.child("users").child(currentUser.getUid()).setValue(user);
             Intent add = new Intent(getApplicationContext(), AddActivity.class);
             startActivity(add);
             finish();
         }
         else if (mNameEditText.getText().toString().length() == 0){
-            Toast.makeText(getApplicationContext(), "Enter a name, we want to know who you are!", Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), "Enter a name, we want to know who you are!", Toast.LENGTH_SHORT).show();
         }
         else if (mWeightEditText.getText().toString().length() == 0){
-            Toast.makeText(getApplicationContext(), "Enter a weight, we won't tell!", Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), "Enter a weight, we won't tell!", Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(getApplicationContext(), "Enter a sex!", Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(), "Enter a sex!", Toast.LENGTH_SHORT).show();
         }
 
 

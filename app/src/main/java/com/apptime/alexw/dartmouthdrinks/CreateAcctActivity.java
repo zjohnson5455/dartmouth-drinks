@@ -44,11 +44,12 @@ public class CreateAcctActivity extends AppCompatActivity {
         mPasswordEditText = findViewById(R.id.create_acct_password);
         mConfirmPasswordEditText = findViewById(R.id.reconfirm_password);
 
-        if (mAuth.getCurrentUser() != null){
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
             Intent add = new Intent(getApplicationContext(), AddActivity.class);
             startActivity(add);
             finish();
         }
+
     }
 
     public void createOnClearClick(View v) {
@@ -89,7 +90,8 @@ public class CreateAcctActivity extends AppCompatActivity {
     }
 
     public void onSignInClick(View v) {
-        Intent sign = new Intent("SIGN");
-        startActivity(sign);
+        Intent intent = new Intent(mContext, SignInActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
