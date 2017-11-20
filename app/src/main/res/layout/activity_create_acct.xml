@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
-    <RelativeLayout
-        android:orientation="vertical"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <Button
             android:id="@+id/create_acct_clear"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_gravity="right"
             android:clickable="true"
             android:text="Clear"
             android:textSize="18dp"
@@ -19,87 +19,100 @@
             >
         </Button>
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:orientation="vertical"
-            >
+            android:layout_height="match_parent">
 
-            <TextView
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:hint="Email"
-                android:inputType="textEmailAddress"
-                android:textSize="24dp" />
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:orientation="vertical"
+                android:con="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                >
 
-            <EditText
-                android:id="@+id/create_acct_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:textSize="24dp" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="Email"
+                    android:textSize="24dp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:text="Password"
-                android:gravity="center_horizontal"
-                />
+                <EditText
+                    android:id="@+id/create_acct_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:gravity="center_horizontal"
+                    android:textSize="24dp" />
 
-            <EditText
-                android:id="@+id/create_acct_password"
-                android:inputType="textPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:maxLines="1"
-                />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24dp"
+                    android:text="Password"
+                    android:gravity="center_horizontal"
+                    />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:text="Verify Password"
-                android:gravity="center_horizontal"
-                />
+                <EditText
+                    android:id="@+id/create_acct_password"
+                    android:inputType="textPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24dp"
+                    android:maxLines="1"
+                    />
 
-            <EditText
-                android:id="@+id/reconfirm_password"
-                android:inputType="textPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:maxLines="1"
-                />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24dp"
+                    android:text="Verify Password"
+                    android:gravity="center_horizontal"
+                    />
 
-            <Button
-                android:id="@+id/sign_in_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Next"
-                android:textSize="18dp"
-                android:clickable="true"
-                android:onClick="onNextClick"
-                />
+                <EditText
+                    android:id="@+id/reconfirm_password"
+                    android:inputType="textPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24dp"
+                    android:maxLines="1"
+                    />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:clickable="true"
-                android:textSize="22dp"
-                android:text="I already have an account"
-                android:gravity="center"
-                android:onClick="onSignInClick"
-                />
+                <Button
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Next"
+                    android:textSize="18dp"
+                    android:clickable="true"
+                    android:onClick="onNextClick"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:clickable="true"
+                    android:textSize="22dp"
+                    android:text="I already have an account"
+                    android:gravity="center"
+                    android:onClick="onSignInClick"
+                    />
 
 
-        </LinearLayout>
+            </LinearLayout>
 
-    </RelativeLayout>
+        </android.support.constraint.ConstraintLayout>
+
+    </LinearLayout>
 
 </ScrollView>
