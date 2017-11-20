@@ -24,6 +24,11 @@ public class Drink {
         alcohol = Formulas.drinkAlcoholContent(amount, percent);
     }
 
+    //Blank constructor for Firebase
+    public Drink(){
+
+    }
+
     public String getName() {
         return name;
     }

@@ -16,9 +16,9 @@ public class User {
     private boolean male;
     private double bac;
     private Date timeOfLastCalc;
-    private List<OnNight> history;
+    private ArrayList<OnNight> history;
 
-    public User (String userId, String name, int weight, boolean male){
+    public User (String userId, String name, int weight, boolean male, ArrayList<OnNight> list){
         this.userId = userId;
         this.name = name;
         this.weight = weight;
@@ -26,7 +26,7 @@ public class User {
         timeOfLastCalc = new Date();
 
         bac = 0.0;
-        history = new ArrayList<>();
+        history = list;
     }
 
     public User(){
@@ -61,7 +61,7 @@ public class User {
         return timeOfLastCalc;
     }
 
-    public List<OnNight> getHistory() {
+    public ArrayList<OnNight> getHistory() {
         return history;
     }
 
@@ -89,7 +89,7 @@ public class User {
         this.timeOfLastCalc = timeOfLastCalc;
     }
 
-    public void setHistory(List<OnNight> history) {
+    public void setHistory(ArrayList<OnNight> history) {
         this.history = history;
     }
 }

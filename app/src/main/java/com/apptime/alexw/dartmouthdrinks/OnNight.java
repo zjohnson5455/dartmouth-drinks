@@ -18,6 +18,10 @@ public class OnNight {
         drinkList = new ArrayList<>();
     }
 
+    public OnNight(){
+
+    }
+
     public void addDrink(Drink d) {
         drinkList.add(d);
     }
@@ -26,4 +30,11 @@ public class OnNight {
         return day;
     }
 
+    public List<Drink> getDrinkList() {
+        return drinkList;
+    }
+
+    public void setDrinkList(List<Drink> drinkList) {
+        this.drinkList = drinkList;
+    }
 }

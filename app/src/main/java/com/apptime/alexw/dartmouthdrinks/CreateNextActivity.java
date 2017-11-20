@@ -15,6 +15,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 /**
  * Created by zacharyjohnson on 11/18/17.
  */
@@ -63,7 +65,7 @@ public class CreateNextActivity extends AppCompatActivity {
             int weight = Integer.valueOf(mWeightEditText.getText().toString());
             Boolean maleBool = mSexSpinner.getSelectedItem().toString().equals("Male");
 
-            User user = new User(UID, name, weight, maleBool);
+            User user = new User(UID, name, weight, maleBool, new ArrayList<OnNight>());
             mDatabase.child("users").child(currentUser.getUid()).setValue(user);
             Intent welcome = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(welcome);

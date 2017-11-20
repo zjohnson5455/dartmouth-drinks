@@ -21,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 import android.widget.Toast;
 
 import java.text.Normalizer;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class AddActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
-        start = getIntent().getBooleanExtra("start night", false);
+        start = getIntent().getBooleanExtra("Start night", false);
 
         mResourceButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,11 +197,14 @@ public class AddActivity extends AppCompatActivity {
             currentTimeUser.setBac(bac);
             currentTimeUser.setTimeOfLastCalc(currentTime);
 
-            List<OnNight> history = currentTimeUser.getHistory();
+            ArrayList<OnNight> history = currentTimeUser.getHistory();
             OnNight currentNight;
+
+
 
             if (start) {
                 currentNight = new OnNight(currentTime);
+                if (currentNight == null) currentNight.setDrinkList(new ArrayList<Drink>());
                 start = false;
             }
             else {
@@ -208,6 +212,7 @@ public class AddActivity extends AppCompatActivity {
             }
 
             currentNight.addDrink(newDrink);
+            if (history == null) history = new ArrayList<OnNight>();
             history.add(currentNight);
             currentTimeUser.setHistory(history);
 
