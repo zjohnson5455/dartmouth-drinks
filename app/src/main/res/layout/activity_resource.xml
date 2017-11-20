@@ -12,6 +12,7 @@
         android:textSize="50dp"
         android:textColor="#000000"
         android:gravity="center_horizontal"
+        android:onClick="onResourcesClick"
         />
 
     <TextView
@@ -43,7 +44,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:textColor="#ff0000"
-            android:text="646-4000"
+            android:text="603-646-4000"
             android:textSize="25dp"
             android:paddingRight="10dp"
             android:autoLink="phone"

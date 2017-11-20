@@ -7,6 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.gms.location.Geofence;
+
 /**
  * Created by zacharyjohnson on 11/17/17.
  */
@@ -30,5 +32,12 @@ public class ResourcesActivity extends AppCompatActivity {
         Log.d("SERVVY", "Reached OnCLick");
         service.setClass(getApplicationContext(), ForegroundService.class);
         stopService(service);
+    }
+
+    //to test the geofence
+    public void onResourcesClick(View v) {
+        Intent test = new Intent();
+        test.setClass(getApplicationContext(), GeoFencey.class);
+        startActivity(test);
     }
 }
