@@ -8,8 +8,7 @@
     </string-array>
     <string name="a0.02">No loss of coordination, slight euphoria and loss of shyness. Depressant effects are not apparent. Mildly relaxed and maybe a little lightheaded.</string>
     <string name="a0.04">Feeling of well-being, relaxation, lower inhibitions, sensation of warmth. Euphoria. Some minor impairment of reasoning and memory, lowering of caution. Your behavior may become exaggerated and emotions intensified (Good emotions are better, bad emotions are worse)</string>
-    <string name="a0.07">Slight impairment of balance, speech, vision, reaction time, and hearing. Euphoria. Judgment and self-control are reduced, and caution, reason and memory are impaired, .08 is legally impaired and it is illegal to drive at this level. You will probably believe that you are functioning better than you really are.
-</string>
+    <string name="a0.07">Slight impairment of balance, speech, vision, reaction time, and hearing. Euphoria. Judgment and self-control are reduced, and caution, reason and memory are impaired, .08 is legally impaired and it is illegal to drive at this level. You will probably believe that you are functioning better than you really are.</string>
     <string name="a0.1"> Significant impairment of motor coordination and loss of good judgment. Speech may be slurred; balance, vision, reaction time and hearing will be impaired. Euphoria.</string>
     <string name="a0.13">Gross motor impairment and lack of physical control. Blurred vision and major loss of balance. Euphoria is reduced and dysphoria (anxiety, restlessness) is beginning to appear. Judgment and perception are severely impaired.</string>
     <string name="a0.16">Dysphoria predominates, nausea may appear. The drinker has the appearance of a "sloppy drunk."</string>
@@ -25,4 +24,7 @@
     <string name="Me">This will notify you if your BAC passes the threshold.</string>
     <string name="Friend">This will send a text to a friend (selected by you) if your BAC passes the threshold (set by you). </string>
     <string name="Organizer">This will send a text to the party organizers if your BAC passes the threshold (set by the organizers). </string>
+    <string name="FriendText">Hey! I\'m over my BAC threshold. Can you make sure I\'m okay? Sent from Dartmouth Drinks App.</string>
+    <string name="OrganizerText1">Hey! My name is</string>
+    <string name="OrganizerText2"> . I\'m over your event\'s BAC limit, so please make sure I\'m safe. Sent from Dartmouth Drinks App.</string>
 </resources>

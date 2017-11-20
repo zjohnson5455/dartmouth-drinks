@@ -13,11 +13,13 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +58,7 @@ public class ForegroundService extends Service implements LocationListener {
     Context context;
     Notification notification;
     boolean notified = false;
+    boolean texted = false;
 
     DatabaseReference databaseEvents;
     List<OrganizedEvent> eventsList;
@@ -212,7 +216,10 @@ public class ForegroundService extends Service implements LocationListener {
             user.setTimeOfLastCalc(date);
             mDatabase.child("users").child(currentUser.getUid()).setValue(user);
             BAC = user.getBac();
-
+            int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+            if (8 < hour && hour < 9){
+                stopSelf();
+            }
         }
         if (settings != null) bacNotify();
     }
@@ -245,6 +252,17 @@ public class ForegroundService extends Service implements LocationListener {
         else if (BAC < settings.getThreshhold() && notified == true) {
             notified = false;
             notificationManager.cancel(3);
+        }
+
+        if (BAC > settings.getThreshhold() && !texted && settings.getFriends()) {
+//            Intent textIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
+//                    + currentTimeUser.getFriendNumber()));
+            String message = getString(R.string.FriendText);
+//            textIntent.putExtra("sms_body", message);
+//            textIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startActivity(textIntent);
+            sendSMS(currentTimeUser.getFriendNumber(), message);
+            texted = true;
         }
 
     }
@@ -295,11 +313,38 @@ public class ForegroundService extends Service implements LocationListener {
                 if (!notifiedMap.get(event)) {
                     String target = event.testNotify(BAC, lat, lng);
                     if (target != null) {
-                        Log.d("TEXT", target);
+//                        Intent textIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
+//                                + target));
+//                        String message = getString(R.string.OrganizerText1);
+//                        message += currentTimeUser.getName();
+//                        message += getString(R.string.OrganizerText2);
+//                        textIntent.putExtra("sms_body", message);
+//                        textIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        startActivity(textIntent);
+                        String message = getString(R.string.OrganizerText1);
+                        message += " " + currentTimeUser.getName();
+                        message += getString(R.string.OrganizerText2);
+
+                        sendSMS(target, message);
+
+                        texted = true;
                         notifiedMap.put(event, true);
                     }
                 }
             }
+        }
+    }
+
+    public void sendSMS(String phoneNo, String msg) {
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(phoneNo, null, msg, null, null);
+            Toast.makeText(getApplicationContext(), "Message Sent",
+                    Toast.LENGTH_LONG).show();
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(),ex.getMessage().toString(),
+                    Toast.LENGTH_LONG).show();
+            ex.printStackTrace();
         }
     }
 

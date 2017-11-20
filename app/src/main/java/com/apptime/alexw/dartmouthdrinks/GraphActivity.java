@@ -68,13 +68,13 @@ public class GraphActivity extends AppCompatActivity {
                     }});
 
                 for (Drink drink:drinks) {
-                    series.appendData(new DataPoint(drink.getTime().getTime(), drink.getPrevBac()), false, 100);
+                    series.appendData(new DataPoint(new Date(drink.getTime().getTime()), drink.getPrevBac()), false, 100);
                     Long time = drink.getTime().getTime() + 1000; //This is weird, but having 2 identical times meant the vertical lines did not match up, so I bumped the second time on a second to allow vertical lines
-                    series.appendData(new DataPoint(time, drink.getPostBac()), false, 100);
+                    series.appendData(new DataPoint(new Date(time), drink.getPostBac()), false, 100);
                 }
 
                 graph.addSeries(series);
-                graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
+//                graph.getGridLabelRenderer().setHorizontalLabelsVisible(true);
                 // activate horizontal zooming and scrolling
                 graph.getViewport().setScalable(true);
 
