@@ -2,6 +2,7 @@ package com.apptime.alexw.dartmouthdrinks;
 
 import android.*;
 import android.Manifest;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,6 +29,12 @@ public class WelcomeActivity extends AppCompatActivity {
     Context mContext;
 
     public void onCreate(Bundle savedInstanceState) {
+
+        if (isMyServiceRunning(ForegroundService.class)) {
+            Intent skip = new Intent();
+            skip.setClass(getApplicationContext(), AddActivity.class);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
@@ -97,5 +104,15 @@ public class WelcomeActivity extends AppCompatActivity {
         else {
             Toast.makeText(getApplicationContext(), "Cannot proceed without location permission", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

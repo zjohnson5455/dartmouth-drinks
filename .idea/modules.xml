@@ -4,8 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/DartmouthDrinks.iml" filepath="$PROJECT_DIR$/DartmouthDrinks.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Alex W\Documents\CS65\DartmouthDrinks\.idea\dartmouth-drinks-app.iml" filepath="C:\Users\Alex W\Documents\CS65\DartmouthDrinks\.idea\dartmouth-drinks-app.iml" />
       <module fileurl="file://C:\Users\Alex W\Documents\CS65\DartmouthDrinks\dartmouth-drinks-app.iml" filepath="C:\Users\Alex W\Documents\CS65\DartmouthDrinks\dartmouth-drinks-app.iml" />
+      <module fileurl="file://C:\Users\Alex W\Documents\CS65\DartmouthDrinks\.idea\dartmouth-drinks-app.iml" filepath="C:\Users\Alex W\Documents\CS65\DartmouthDrinks\.idea\dartmouth-drinks-app.iml" />
     </modules>
   </component>
 </project>
