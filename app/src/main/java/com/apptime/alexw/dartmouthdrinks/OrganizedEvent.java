@@ -33,6 +33,10 @@ public class OrganizedEvent {
         endTime = null;
     }
 
+    public OrganizedEvent(){
+
+    }
+
     public boolean isInFence(LatLng pos) {
         float[] results = new float[1];
         Location.distanceBetween(pos.latitude, pos.longitude, position.latitude, position.longitude, results);

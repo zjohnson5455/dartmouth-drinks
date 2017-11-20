@@ -17,6 +17,7 @@ public class User {
     private double bac;
     private Date timeOfLastCalc;
     private ArrayList<OnNight> history;
+    private Settings settings;
 
     public User (String userId, String name, int weight, boolean male, ArrayList<OnNight> list){
         this.userId = userId;
@@ -24,6 +25,7 @@ public class User {
         this.weight = weight;
         this.male = male;
         timeOfLastCalc = new Date();
+        settings = new Settings();
 
         bac = 0.0;
         history = list;
@@ -91,5 +93,13 @@ public class User {
 
     public void setHistory(ArrayList<OnNight> history) {
         this.history = history;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
     }
 }
