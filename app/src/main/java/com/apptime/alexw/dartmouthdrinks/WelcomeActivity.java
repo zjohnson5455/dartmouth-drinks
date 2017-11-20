@@ -51,6 +51,8 @@ public class WelcomeActivity extends AppCompatActivity {
         if (isMyServiceRunning(ForegroundService.class)) {
             Intent skip = new Intent();
             skip.setClass(getApplicationContext(), AddActivity.class);
+            startActivity(skip);
+            finish();
         }
 
         super.onCreate(savedInstanceState);

@@ -132,10 +132,9 @@ public class ForegroundService extends Service implements LocationListener {
         // cancel if already existed
         if(mTimer != null) {
             mTimer.cancel();
-        } else {
-            // recreate new
-            mTimer = new Timer();
         }
+        // recreate new
+        mTimer = new Timer();
         // schedule task
         mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 0, NOTIFY_INTERVAL);
 
@@ -170,7 +169,7 @@ public class ForegroundService extends Service implements LocationListener {
                 .setContentIntent(mainPendingIntent)
                 .setOngoing(true);
         notification = builder.build();
-        startForeground(1, notification);
+        startForeground(Constants.SERVICE_NOTIFICATION_CHANNEL, notification);
     }
 
     //not a bound service so just return null
@@ -201,12 +200,12 @@ public class ForegroundService extends Service implements LocationListener {
     // This is the method that can be called to update the Notification
 
     private void updateNotification() {
-        String text = "Your BAC is " + BAC;
+        String text = "Your BAC is " + String.format("%.4f", BAC);
 
         Notification notification = getMyActivityNotification(text);
 
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mNotificationManager.notify(NOTIF_ID, notification);
+        mNotificationManager.notify(Constants.SERVICE_NOTIFICATION_CHANNEL, notification);
     }
 
     //updates BAC continuously
@@ -252,13 +251,13 @@ public class ForegroundService extends Service implements LocationListener {
             //if the settings dictate it, send a vibration and a sound with the notification
             noti.defaults |= Notification.DEFAULT_VIBRATE;
             noti.defaults |= Notification.DEFAULT_SOUND;
-            notificationManager.notify(3, noti);
+            notificationManager.notify(Constants.SERVICE_PUSH_NOTIFICATION_CHANNEL, noti);
             notified = true;
         }
 
         else if (BAC < settings.getThreshhold() && notified == true) {
             notified = false;
-            notificationManager.cancel(3);
+            notificationManager.cancel(Constants.SERVICE_PUSH_NOTIFICATION_CHANNEL);
         }
 
         //send a text if the user wants it

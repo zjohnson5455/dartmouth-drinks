@@ -40,8 +40,8 @@ public class SignInActivity extends AppCompatActivity {
 
         //if there's no user yet, get one
         if (FirebaseAuth.getInstance().getCurrentUser() != null){
-            Intent add = new Intent(getApplicationContext(), WelcomeActivity.class);
-            startActivity(add);
+            Intent welcome = new Intent(getApplicationContext(), WelcomeActivity.class);
+            startActivity(welcome);
             finish();
         }
 

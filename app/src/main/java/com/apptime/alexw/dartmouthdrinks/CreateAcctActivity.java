@@ -51,7 +51,6 @@ public class CreateAcctActivity extends AppCompatActivity {
             startActivity(add);
             finish();
         }
-
     }
 
     //when you click on the clear button
@@ -71,27 +70,32 @@ public class CreateAcctActivity extends AppCompatActivity {
         }
         //otherwise, if they do match, create a user
         else {
-            mAuth.createUserWithEmailAndPassword(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString())
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                // Sign in success, update UI with the signed-in user's information
-                                Log.d(TAG, "createUserWithEmail:success");
-                                FirebaseUser user = mAuth.getCurrentUser();
-                                Toast.makeText(CreateAcctActivity.this, "Authentication successful.", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(mContext, CreateNextActivity.class);
-                                startActivity(intent);
-                                finish();
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(CreateAcctActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+            if (mPasswordEditText.getText().toString().length() < 6)
+                Toast.makeText(getApplicationContext(), "Password must be 6 characters long", Toast.LENGTH_SHORT).show();
+            else {
+                Toast.makeText(getApplicationContext(), "Almost there...", Toast.LENGTH_SHORT).show();
+                mAuth.createUserWithEmailAndPassword(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString())
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Log.d(TAG, "createUserWithEmail:success");
+                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    Toast.makeText(CreateAcctActivity.this, "Authentication successful.", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(mContext, CreateNextActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                    Toast.makeText(CreateAcctActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                                }
+
+
                             }
-
-
-                        }
-                    });
+                        });
+            }
 
         }
     }

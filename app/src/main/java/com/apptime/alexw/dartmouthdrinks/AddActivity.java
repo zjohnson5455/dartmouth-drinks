@@ -45,7 +45,6 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
 
     Button mResourceButton;
     Button mHistoryButton;
-    ImageButton mSettingsImageButton;
 
     //different types of alcoholic intake
     ImageView mCupImageView;
@@ -73,7 +72,6 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
 
         mResourceButton = findViewById(R.id.resourceButton);
         mHistoryButton = findViewById(R.id.historyButton);
-        mSettingsImageButton = findViewById(R.id.settingsImageButton);
         mCupImageView = findViewById(R.id.cupImageView);
         mPongImageView = findViewById(R.id.pongImageView);
         mCanImageView = findViewById(R.id.canImageView);
@@ -95,14 +93,6 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, ResourcesActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        mSettingsImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, SettingsActivity.class);
                 startActivity(intent);
             }
         });
