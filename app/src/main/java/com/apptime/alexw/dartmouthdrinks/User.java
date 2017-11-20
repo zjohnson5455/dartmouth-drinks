@@ -1,6 +1,7 @@
 package com.apptime.alexw.dartmouthdrinks;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,6 +15,7 @@ public class User {
     private int weight;
     private boolean male;
     private double bac;
+    private Date timeOfLastCalc;
     private List<OnNight> history;
 
     public User (String userId, String name, int weight, boolean male){
@@ -21,6 +23,8 @@ public class User {
         this.name = name;
         this.weight = weight;
         this.male = male;
+        timeOfLastCalc = new Date();
+
         bac = 0.0;
         history = new ArrayList<>();
     }
@@ -53,6 +57,10 @@ public class User {
         return bac;
     }
 
+    public Date getTimeOfLastCalc() {
+        return timeOfLastCalc;
+    }
+
     public void setUserId(String userId) {
         this.userId = userId;
     }
@@ -71,5 +79,9 @@ public class User {
 
     public void setBac(double bac) {
         this.bac = bac;
+    }
+
+    public void setTimeOfLastCalc(Date timeOfLastCalc) {
+        this.timeOfLastCalc = timeOfLastCalc;
     }
 }

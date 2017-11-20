@@ -16,9 +16,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import android.widget.Toast;
+
+import java.util.Date;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -37,7 +38,7 @@ public class AddActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     DatabaseReference databaseUser;
-    User user;
+    User currentTimeUser;
 
 
     @Override
@@ -135,8 +136,13 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                User user = getUser();
-                mBACTextView.setText(String.valueOf(user.getBac()));
+                currentTimeUser = dataSnapshot.getValue(User.class);
+
+                double bac = dataSnapshot.getValue(User.class).getBac();
+
+                String bacText = String.format("%.4f", bac);
+
+                mBACTextView.setText(bacText);
 
             }
 
@@ -155,18 +161,25 @@ public class AddActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ((requestCode == Constants.ADD_DRINK_REQUEST_CODE || requestCode == Constants.TIME_REQUEST_CODE)
                 && resultCode == RESULT_OK) {
+//            getUser();
+            Date currentTime = new Date();
             String name = data.getStringExtra("name");
             double amount = data.getDoubleExtra("amount", 0.0);
             double percent = data.getDoubleExtra("percent", 0.0);
-            double alcohol = Formulas.drinkAlcoholContent(amount, percent);
-            double prevBac = 0.0; // placeholder
-            int timeSinceCalc = 0;
-            int timeSinceDrink = data.getIntExtra("time", 0);
-            Log.d("BAC", name);
-            double bac = Formulas.calculateBac(true, 135, prevBac, alcohol, timeSinceCalc, timeSinceDrink);
-            Log.d("BAC", Double.toString(alcohol));
-            Log.d("BAC", Double.toString(bac));
+            double prevBac = currentTimeUser.getBac();
+            if (prevBac == 0.0) {
+                currentTimeUser.setTimeOfLastCalc(currentTime);
+            }
+            int weight = currentTimeUser.getWeight();
+            boolean male = currentTimeUser.isMale();
+            double timeSinceCalc = Formulas.milliToMinutes(currentTime.getTime() - currentTimeUser.getTimeOfLastCalc().getTime());
+            double timeSinceDrink = (double)data.getIntExtra("time", 0);
+            Log.d("BAC TIME", String.valueOf(timeSinceDrink));
+            double bac = Formulas.calculateBac(male, weight, prevBac, Formulas.drinkAlcoholContent(amount,percent), timeSinceCalc, timeSinceDrink);
             Toast.makeText(getApplicationContext(), Double.toString(bac), Toast.LENGTH_SHORT).show();
+            currentTimeUser.setBac(bac);
+            currentTimeUser.setTimeOfLastCalc(currentTime);
+            mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
         }
     }
 
@@ -175,27 +188,28 @@ public class AddActivity extends AppCompatActivity {
         startActivity(info);
     }
 
-    public User getUser(){
-
-
-        databaseUser = Utils.getDatabase().getReference("users").child(currentUser.getUid());
-
-        databaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
-            User user;
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                user = dataSnapshot.getValue(User.class);
-
-                //mDatabase.child("users").child(currentUser.getUid()).setValue(user);
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getCode());
-            }
-        });
-        return user;
-    }
+//    public void getUser(){
+//
+//
+//        databaseUser = Utils.getDatabase().getReference("users").child(currentUser.getUid());
+//
+//        databaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
+//
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                currentTimeUser = dataSnapshot.getValue(User.class);
+//
+//                //mDatabase.child("users").child(currentUser.getUid()).setValue(user);
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//                System.out.println("The read failed: " + databaseError.getCode());
+//            }
+//        });
+//
+//
+//    }
 }

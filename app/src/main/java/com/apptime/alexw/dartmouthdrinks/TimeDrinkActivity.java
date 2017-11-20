@@ -50,7 +50,7 @@ public class TimeDrinkActivity extends FragmentActivity {
 //            int min_off = time_off - subtract;
 //            int new_hour = hour - sub_hours;
 //            int new_min = min - min_off;
-         result.putExtra("Time off", timeOff);
+         result.putExtra("time", timeOff);
          setResult(RESULT_OK, result);
          finish();
 

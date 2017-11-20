@@ -6,8 +6,7 @@ package com.apptime.alexw.dartmouthdrinks;
 
 public class Constants {
 
-    static final double GRAMS_PER_POUND = 453.592;
-    static final double GRAMS_PER_FL_OZ = 29.5735296875;
+    static final int MILLISECONDS_PER_MINUTE = 60000;
 
     static final double ALCOHOL_METABOLISM_RATE = .015;
     static final double WIDMARK_CONSTANT = 5.14;
