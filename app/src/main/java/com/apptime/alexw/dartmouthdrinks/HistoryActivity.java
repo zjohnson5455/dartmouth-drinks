@@ -50,16 +50,18 @@ public class HistoryActivity extends AppCompatActivity {
                 onNights = currentTimeUser.getHistory();
                 OnNightAdapter adapter = new OnNightAdapter(getApplicationContext(), onNights);
 
-                lv.setAdapter(adapter);
+                if (onNights != null) {
+                    lv.setAdapter(adapter);
 
-                lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent drink = new Intent(getApplicationContext(), DrinksActivity.class);
-                        drink.putExtra("ID", position);
-                        startActivity(drink);
-                    }
-                });
+                    lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            Intent drink = new Intent(getApplicationContext(), DrinksActivity.class);
+                            drink.putExtra("ID", position);
+                            startActivity(drink);
+                        }
+                    });
+                }
 
             }
 

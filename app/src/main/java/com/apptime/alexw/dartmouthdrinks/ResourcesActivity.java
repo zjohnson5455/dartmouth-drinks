@@ -29,6 +29,9 @@ public class ResourcesActivity extends AppCompatActivity {
         Log.d("SERVVY", "Reached OnCLick");
         service.setClass(getApplicationContext(), ForegroundService.class);
         stopService(service);
+        Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

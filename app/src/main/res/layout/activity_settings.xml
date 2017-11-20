@@ -103,12 +103,6 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/edit_profile_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit Profile"/>
-
-            <Button
                 android:id="@+id/sign_out_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -123,29 +117,7 @@
             android:textSize="36dp"
             android:text="Settings"/>
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="BAC Threshold"
-                android:textSize="24dp"
-                android:id="@+id/textView" />
-
-            <EditText
-                android:id="@+id/bacEditText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:ems="5"
-                android:text="0.2"
-                android:inputType="numberDecimal"
-                android:focusedByDefault="false"/>
-
-        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -211,6 +183,41 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BAC Threshold"
+                android:textSize="24dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/bacEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:ems="5"
+                android:inputType="numberDecimal"
+                android:text="0.2" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Button" />
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Contact Number"
@@ -228,22 +235,27 @@
                 android:inputType="numberDecimal"
                 android:focusedByDefault="false"/>
 
-        </RelativeLayout>
 
+
+        </RelativeLayout>
 
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="48dp"
             android:padding="8dp">
-
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Explain"
-                android:onClick="onExplainClick"/>
-
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="57dp"
+                android:onClick="onExplainClick"
+                android:text="Explain" />
 
         </LinearLayout>
 

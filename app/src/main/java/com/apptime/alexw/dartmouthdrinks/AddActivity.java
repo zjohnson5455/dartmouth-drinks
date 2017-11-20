@@ -162,6 +162,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
         });
 
 
+
         databaseUser = Utils.getDatabase().getReference("users").child(currentUser.getUid());
 
         databaseUser.addValueEventListener(new ValueEventListener() {

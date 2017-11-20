@@ -26,6 +26,7 @@ public class WelcomeActivity extends AppCompatActivity {
     Button mResourceButton;
     ImageButton mSettingsImageButton;
     Button startNightButton;
+    Button mHistoryButton;
     Context mContext;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         mResourceButton = findViewById(R.id.resourceButton);
+        mHistoryButton = findViewById(R.id.historyButton);
         mSettingsImageButton = findViewById(R.id.settingsImageButton);
         startNightButton = findViewById(R.id.start_night_button);
         mContext = this;
@@ -51,6 +53,16 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
 
+        mHistoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent history = new Intent(getApplicationContext(), HistoryActivity.class);
+                startActivity(history);
+            }
+        });
+
+
+
         startNightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -59,7 +71,6 @@ public class WelcomeActivity extends AppCompatActivity {
                     intent.putExtra("Start night", true);
                     startActivity(intent);
                     Intent service = new Intent();
-                    Log.d("SERVVY", "Reached OnCLick");
                     service.setClass(getApplicationContext(), ForegroundService.class);
                     startService(service);
                     finish();
