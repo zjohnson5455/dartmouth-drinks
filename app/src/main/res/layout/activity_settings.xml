@@ -27,11 +27,12 @@
                 android:textSize="24dp"/>
 
             <TextView
+                android:id="@+id/nameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="NAME"
-                android:textSize="24dp"/>
+                android:textSize="24dp" />
 
         </RelativeLayout>
 
@@ -46,31 +47,12 @@
                 android:textSize="24dp"/>
 
             <TextView
+                android:id="@+id/emailTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="EMAIL"
-                android:textSize="24dp"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Password"
-                android:textSize="24dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:inputType="textPassword"
-                android:text="PASSWORD"
-                android:textSize="24dp"/>
+                android:textSize="24dp" />
 
         </RelativeLayout>
 
@@ -85,11 +67,12 @@
                 android:textSize="24dp"/>
 
             <TextView
+                android:id="@+id/weightTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="WEIGHT"
-                android:textSize="24dp"/>
+                android:textSize="24dp" />
 
         </RelativeLayout>
 
@@ -104,11 +87,12 @@
                 android:textSize="24dp"/>
 
             <TextView
+                android:id="@+id/sexTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:text="SEX"
-                android:textSize="24dp"/>
+                android:textSize="24dp" />
 
         </RelativeLayout>
 
@@ -147,14 +131,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="BAC Threshold"
-                android:textSize="24dp"/>
+                android:textSize="24dp"
+                android:id="@+id/textView" />
 
-            <TextView
+            <EditText
+                android:id="@+id/bacEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="BAC"
-                android:textSize="24dp"/>
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:ems="5"
+                android:text="0.2"
+                android:inputType="numberDecimal"
+                android:focusedByDefault="false"/>
 
         </RelativeLayout>
 
@@ -165,16 +154,32 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Notify friends"
-                android:textSize="24dp"/>
+                android:text="Notify me"
+                android:textSize="24dp" />
 
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:clickable="false"
-                android:checked="true"
-                />
+                android:checked="true" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notify friends"
+                android:textSize="24dp" />
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:checked="true" />
 
         </RelativeLayout>
 
@@ -192,7 +197,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:clickable="false"
                 android:checked="true"
                 />
 
@@ -214,10 +218,6 @@
                 android:layout_height="wrap_content"
                 android:text="Friends"/>
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edit"/>
 
         </LinearLayout>
 
