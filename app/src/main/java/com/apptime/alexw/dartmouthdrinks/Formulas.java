@@ -8,18 +8,18 @@ import android.util.Log;
 
 public class Formulas {
 
-    public static double calculateBac (boolean male, int weight, double prevBac, double alcohol, double timeSinceCalc, double timeSinceDrink) {
+    public static double calculateBac (User user, Drink drink, double timeSinceCalc, double timeSinceDrink) {
         Log.d("TIME DIFF", String.valueOf(timeSinceCalc - timeSinceDrink));
         double changeInBac;
 
-        if (male) changeInBac = (alcohol * Constants.WIDMARK_CONSTANT)/(weight * Constants.MALE_BAC_CONSTANT);
-        else changeInBac = (alcohol * Constants.WIDMARK_CONSTANT)/(weight * Constants.FEMALE_BAC_CONSTANT);
+        if (user.isMale()) changeInBac = (drink.getAlcohol() * Constants.WIDMARK_CONSTANT)/(user.getWeight() * Constants.MALE_BAC_CONSTANT);
+        else changeInBac = (drink.getAlcohol() * Constants.WIDMARK_CONSTANT)/(user.getWeight() * Constants.FEMALE_BAC_CONSTANT);
 
         changeInBac = bacMetabolism(changeInBac, timeSinceDrink);
 
         if (changeInBac < 0) changeInBac = 0;
 
-        prevBac = bacMetabolism(prevBac, timeSinceCalc);
+        double prevBac = bacMetabolism(drink.getPrevBac(), timeSinceCalc);
 
         double currentBac = prevBac + changeInBac;
 
@@ -40,5 +40,9 @@ public class Formulas {
 
     public static double milliToMinutes (long milliseconds) {
         return (double)(milliseconds / Constants.MILLISECONDS_PER_MINUTE);
+    }
+
+    public static long minutesToMilli (double minutes) {
+        return (long)(minutes * Constants.MILLISECONDS_PER_MINUTE);
     }
 }

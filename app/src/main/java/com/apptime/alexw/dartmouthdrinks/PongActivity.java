@@ -34,15 +34,15 @@ public class PongActivity extends AppCompatActivity {
         mThirdTreeImageView = findViewById(R.id.treeThirdImageView);
 
         final Intent intent = new Intent(mContext, TimeDrinkActivity.class);
-        intent.putExtra("pct", .045);
+        intent.putExtra("percent", .045);
 
         mFullTreeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //todo: actually make this do something
                 Toast.makeText(mContext, "Full Tree Added", Toast.LENGTH_SHORT).show();
-                intent.putExtra("name", "Full Tree");
-                intent.putExtra("amt", 60.0);
+                intent.putExtra("name", "Full tree");
+                intent.putExtra("amount", 60.0);
                 startActivityForResult(intent, Constants.TIME_REQUEST_CODE);
             }
         });
@@ -53,7 +53,7 @@ public class PongActivity extends AppCompatActivity {
                 //todo: actually make this do something
                 Toast.makeText(mContext, "Half Tree Added", Toast.LENGTH_SHORT).show();
                 intent.putExtra("name", "Half Tree");
-                intent.putExtra("amt", 30.0);
+                intent.putExtra("amount", 30.0);
                 startActivityForResult(intent, Constants.TIME_REQUEST_CODE);
             }
         });
@@ -64,7 +64,7 @@ public class PongActivity extends AppCompatActivity {
                 //todo: actually make this do something
                 Toast.makeText(mContext, "Third Tree Added", Toast.LENGTH_SHORT).show();
                 intent.putExtra("name", "One Third of a Tree");
-                intent.putExtra("amt", 20.0);
+                intent.putExtra("amount", 20.0);
                 startActivityForResult(intent, Constants.TIME_REQUEST_CODE);
             }
         });
@@ -75,7 +75,7 @@ public class PongActivity extends AppCompatActivity {
                 //todo: actually make this do something
                 Toast.makeText(mContext, "Full Shrub Added", Toast.LENGTH_SHORT).show();
                 intent.putExtra("name", "Full Shrub");
-                intent.putExtra("amt", 36.0);
+                intent.putExtra("amount", 36.0);
                 startActivityForResult(intent, Constants.TIME_REQUEST_CODE);
             }
         });
@@ -86,7 +86,7 @@ public class PongActivity extends AppCompatActivity {
                 //todo: actually make this do something
                 Toast.makeText(mContext, "Half Shrub Added", Toast.LENGTH_SHORT).show();
                 intent.putExtra("name", "Half Shrub");
-                intent.putExtra("amt", 18.0);
+                intent.putExtra("amount", 18.0);
                 startActivityForResult(intent, Constants.TIME_REQUEST_CODE);
             }
         });
@@ -97,7 +97,7 @@ public class PongActivity extends AppCompatActivity {
                 //todo: actually make this do something
                 Toast.makeText(mContext, "Third Shrub Added", Toast.LENGTH_SHORT).show();
                 intent.putExtra("name","One Third of a Shrub");
-                intent.putExtra("amt", 12);
+                intent.putExtra("amount", 12);
                 startActivityForResult(intent, Constants.TIME_REQUEST_CODE);
             }
         });

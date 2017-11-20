@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import android.widget.Toast;
 
+import java.text.Normalizer;
 import java.util.Date;
 
 public class AddActivity extends AppCompatActivity {
@@ -161,22 +162,26 @@ public class AddActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ((requestCode == Constants.ADD_DRINK_REQUEST_CODE || requestCode == Constants.TIME_REQUEST_CODE)
                 && resultCode == RESULT_OK) {
-//            getUser();
+
             Date currentTime = new Date();
+
             String name = data.getStringExtra("name");
             double amount = data.getDoubleExtra("amount", 0.0);
             double percent = data.getDoubleExtra("percent", 0.0);
+            double timeSinceDrink = (double)data.getIntExtra("time", 0);
             double prevBac = currentTimeUser.getBac();
+            Date drinkTime = new Date(currentTime.getTime() - Formulas.minutesToMilli(timeSinceDrink));
+
+            Drink newDrink = new Drink(name, drinkTime, prevBac, amount, percent);
+
             if (prevBac == 0.0) {
                 currentTimeUser.setTimeOfLastCalc(currentTime);
             }
-            int weight = currentTimeUser.getWeight();
-            boolean male = currentTimeUser.isMale();
+
             double timeSinceCalc = Formulas.milliToMinutes(currentTime.getTime() - currentTimeUser.getTimeOfLastCalc().getTime());
-            double timeSinceDrink = (double)data.getIntExtra("time", 0);
-            Log.d("BAC TIME", String.valueOf(timeSinceDrink));
-            double bac = Formulas.calculateBac(male, weight, prevBac, Formulas.drinkAlcoholContent(amount,percent), timeSinceCalc, timeSinceDrink);
-            Toast.makeText(getApplicationContext(), Double.toString(bac), Toast.LENGTH_SHORT).show();
+
+            double bac = Formulas.calculateBac(currentTimeUser, newDrink, timeSinceCalc, timeSinceDrink);
+
             currentTimeUser.setBac(bac);
             currentTimeUser.setTimeOfLastCalc(currentTime);
             mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
