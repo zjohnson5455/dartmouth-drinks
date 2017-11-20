@@ -185,7 +185,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "SMS needed to activate option", Toast.LENGTH_SHORT).show();
                                 ActivityCompat.requestPermissions(SettingsActivity.this,
                                         new String[]{Manifest.permission.SEND_SMS},
-                                        Constants.PERMISSIONS_REQUEST_SMS_FRIEND);
+                                        Constants.PERMISSIONS_REQUEST_SMS_ORG);
                             }
                             else if (ContextCompat.checkSelfPermission(getApplicationContext(),
                                     Manifest.permission.ACCESS_FINE_LOCATION)
