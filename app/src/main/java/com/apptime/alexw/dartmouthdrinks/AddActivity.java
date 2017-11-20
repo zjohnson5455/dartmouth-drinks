@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.support.annotation.NonNull;
@@ -160,6 +161,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
 
                 currentTimeUser = dataSnapshot.getValue(User.class);
                 double bac = dataSnapshot.getValue(User.class).getBac();
+                setBacColor(bac);
                 String bacText = String.format("%.5f", bac);
                 mBACTextView.setText(bacText);
 
@@ -301,4 +303,16 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
 
     @Override
     public void onProviderDisabled(String provider) {}
+
+    public void setBacColor(double bac){
+        if (bac < 0.05) mBACTextView.setTextColor(Color.parseColor("#1dff00"));
+        else if (bac < 0.1) mBACTextView.setTextColor(Color.parseColor("#a5ff00"));
+        else if (bac < 0.15) mBACTextView.setTextColor(Color.parseColor("#d8ff00"));
+        else if (bac < 0.2) mBACTextView.setTextColor(Color.parseColor("#ff8300"));
+        else if (bac < 0.25) mBACTextView.setTextColor(Color.parseColor("#ff5d00"));
+        else if (bac < 0.3) mBACTextView.setTextColor(Color.parseColor("#ff3700"));
+        else if (bac < 0.35) mBACTextView.setTextColor(Color.parseColor("#ff3700"));
+        else if (bac < 0.4) mBACTextView.setTextColor(Color.parseColor("#630000"));
+        else mBACTextView.setTextColor(Color.parseColor("#000000"));
+    }
 }

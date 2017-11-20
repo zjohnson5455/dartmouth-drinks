@@ -18,24 +18,29 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="If you're in any trouble, contact these numbers"
-        android:textSize="20dp"
         android:gravity="center_horizontal"
-        />
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:text="If you're in any trouble, contact these numbers"
+        android:textSize="20dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/SNS"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Safety and Security"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
             android:padding="10dp"
+            android:text="Safety and Security"
             android:textColor="#000000"
-            android:textSize="25dp"
-            />
+            android:textSize="25dp" />
 
         <TextView
             android:id="@+id/SNSN"
@@ -43,30 +48,29 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:textColor="#ff0000"
-            android:text="603-646-4000"
-            android:textSize="25dp"
-            android:paddingRight="10dp"
             android:autoLink="phone"
             android:linksClickable="true"
-            />
+            android:paddingRight="10dp"
+            android:text="603-646-4000"
+            android:textColor="#ff0000"
+            android:textSize="25dp" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/Emergency"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Emergency"
-            android:padding="10dp"
-            android:textColor="#000000"
-            android:textSize="25dp"
             android:onClick="onEmergencyClicked"
-            />
+            android:padding="10dp"
+            android:text="Emergency"
+            android:textColor="#000000"
+            android:textSize="25dp" />
 
         <TextView
             android:id="@+id/EmergencyN"
@@ -74,24 +78,24 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:textColor="#ff0000"
-            android:text="911"
-            android:textSize="25dp"
-            android:paddingRight="10dp"
             android:autoLink="phone"
             android:linksClickable="true"
-            />
+            android:paddingRight="10dp"
+            android:text="911"
+            android:textColor="#ff0000"
+            android:textSize="25dp" />
 
     </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Know Your Rights"
-        android:textSize="20dp"
-        android:gravity="center_horizontal"
         android:clickable="true"
-        android:onClick="onRightsClick"/>
+        android:gravity="center_horizontal"
+        android:onClick="onRightsClick"
+        android:padding="10dp"
+        android:text="Know Your Rights"
+        android:textSize="20dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -100,40 +104,6 @@
         android:paddingRight="10dp"
         android:autoLink="web"
         android:text="@string/Good_Sam"/>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_gravity="center"
-        >
-
-        <TextView
-            android:id="@+id/BAC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="false"
-            android:layout_gravity="center_vertical"
-            android:text="Your BAC:"
-            android:textColor="#000000"
-            android:paddingRight="10dp"
-            android:textSize="25dp"
-            />
-
-        <TextView
-            android:id="@+id/BACN"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="false"
-            android:layout_gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:textColor="#ff0000"
-            android:text=".00"
-            android:textSize="25dp"
-            />
-
-    </LinearLayout>
 
 
 </LinearLayout>

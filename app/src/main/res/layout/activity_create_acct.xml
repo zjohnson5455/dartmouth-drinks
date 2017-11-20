@@ -30,7 +30,6 @@
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
                 android:orientation="vertical"
-                android:con="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
