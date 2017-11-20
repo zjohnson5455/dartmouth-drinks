@@ -8,7 +8,7 @@ public class Constants {
 
     static final int MILLISECONDS_PER_MINUTE = 60000;
 
-    static final double ALCOHOL_METABOLISM_RATE = .015;
+    static final double ALCOHOL_METABOLISM_RATE = 2; //0.015
     static final double WIDMARK_CONSTANT = 5.14;
     static final double MALE_BAC_CONSTANT = .73;
     static final double FEMALE_BAC_CONSTANT = .66;

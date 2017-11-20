@@ -20,7 +20,7 @@
         </activity>
         <activity android:name=".BeerActivity" />
         <activity android:name=".ResourcesActivity" />
-        <activity android:name=".PongActivity"></activity>
+        <activity android:name=".PongActivity" />
         <activity android:name=".AddActivity">
             <intent-filter>
                 <action android:name="ADD"/>
@@ -45,10 +45,16 @@
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
-        <activity android:name=".SettingsActivity"/>
-        <activity android:name=".TimeDrinkActivity"/>
-        <service android:name=".ForegroundService"/>
-        <activity android:name=".WelcomeActivity"/>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".TimeDrinkActivity" />
+
+        <service android:name=".ForegroundService" />
+
+        <activity android:name=".WelcomeActivity" />
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".DrinksActivity" />
+        <activity android:name=".GraphActivity"></activity>
         <activity android:name=".ExplainActivity"/>
     </application>
+
 </manifest>

@@ -189,7 +189,8 @@ public class AddActivity extends AppCompatActivity {
         mHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), String.valueOf(new Date().getTime()), Toast.LENGTH_SHORT).show();
+                Intent history = new Intent(getApplicationContext(), HistoryActivity.class);
+                startActivity(history);
             }
         });
 
@@ -222,6 +223,7 @@ public class AddActivity extends AppCompatActivity {
 
             double bac = Formulas.calculateBac(currentTimeUser, newDrink, timeSinceCalc, timeSinceDrink);
 
+            newDrink.setPostBac(bac);
             currentTimeUser.setBac(bac);
             currentTimeUser.setTimeOfLastCalc(currentTime);
 

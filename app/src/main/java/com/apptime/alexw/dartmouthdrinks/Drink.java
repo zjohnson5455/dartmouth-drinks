@@ -14,6 +14,7 @@ public class Drink {
     private double amount;
     private double percent;
     private double alcohol;
+    private double postBac;
 
     public Drink (String name, Date time, double bac, double amount, double percent){
         this.name = name;
@@ -51,5 +52,13 @@ public class Drink {
 
     public double getAlcohol() {
         return alcohol;
+    }
+
+    public double getPostBac() {
+        return postBac;
+    }
+
+    public void setPostBac(double postBac) {
+        this.postBac = postBac;
     }
 }
