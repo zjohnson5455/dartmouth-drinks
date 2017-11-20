@@ -34,7 +34,7 @@ public class CreateNextActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_next);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase = Utils.getDatabase().getReference();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 

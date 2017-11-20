@@ -27,7 +27,7 @@ public class BeerActivity extends AppCompatActivity {
         mQuarterBeer = findViewById(R.id.quarterImageView);
 
         final Intent result = new Intent(this, TimeDrinkActivity.class);
-        result.putExtra("pct", .045);
+        result.putExtra("percent", .045);
 
         mFullBeer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +36,7 @@ public class BeerActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "Full Beer Added", Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(mContext, AddActivity.class);
 //                startActivity(intent);
-                result.putExtra("amt", 12.0);
+                result.putExtra("amount", 12.0);
                 result.putExtra("name", "Full cup of beer");
                 startActivityForResult(result, Constants.TIME_REQUEST_CODE);
             }
@@ -49,7 +49,7 @@ public class BeerActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "Half Beer Added", Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(mContext, AddActivity.class);
 //                startActivity(intent);
-                result.putExtra("amt", 6.0);
+                result.putExtra("amount", 6.0);
                 result.putExtra("name", "Half cup of beer");
                 startActivityForResult(result, Constants.TIME_REQUEST_CODE);
             }
@@ -62,7 +62,7 @@ public class BeerActivity extends AppCompatActivity {
                 Toast.makeText(mContext, "Quarter Beer Added", Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(mContext, AddActivity.class);
 //                startActivity(intent);
-                result.putExtra("amt", 3.0);
+                result.putExtra("amount", 3.0);
                 result.putExtra("name", "Quarter cup of beer");
                 startActivityForResult(result, Constants.TIME_REQUEST_CODE);
             }

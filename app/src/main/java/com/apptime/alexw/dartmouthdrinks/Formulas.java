@@ -1,5 +1,8 @@
 package com.apptime.alexw.dartmouthdrinks;
 
+import android.content.Intent;
+import android.util.Log;
+
 /**
  * Created by briantomasco on 11/18/17.
  */
@@ -10,8 +13,10 @@ public class Formulas {
         double bacAtDrink = bacMetabolism(prevBac, timeSinceCalc - timeSinceDrink);
         double changeInBac;
 
-        if (male) changeInBac = alcohol/(lbsToGrams(weight) * Constants.MALE_BAC_CONSTANT);
-        else changeInBac = alcohol/(lbsToGrams(weight) * Constants.FEMALE_BAC_CONSTANT);
+        if (male) changeInBac = (alcohol * Constants.WIDMARK_CONSTANT)/(weight * Constants.MALE_BAC_CONSTANT);
+        else changeInBac = (alcohol * Constants.WIDMARK_CONSTANT)/(weight * Constants.FEMALE_BAC_CONSTANT);
+
+        Log.d("BAC", Double.toString(changeInBac));
 
         double bacAfterDrink = bacAtDrink + changeInBac;
         double currentBac = bacMetabolism(bacAfterDrink, timeSinceDrink);
@@ -24,7 +29,7 @@ public class Formulas {
     }
 
     public static double drinkAlcoholContent (double amount, double percent){
-        return flOzToGrams(amount) * percent;
+        return amount * percent;
     }
 
     public static double lbsToGrams (int weight){

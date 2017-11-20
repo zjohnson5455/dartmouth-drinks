@@ -10,8 +10,9 @@ public class Constants {
     static final double GRAMS_PER_FL_OZ = 29.5735296875;
 
     static final double ALCOHOL_METABOLISM_RATE = .015;
-    static final double MALE_BAC_CONSTANT = .68;
-    static final double FEMALE_BAC_CONSTANT = .55;
+    static final double WIDMARK_CONSTANT = 5.14;
+    static final double MALE_BAC_CONSTANT = .73;
+    static final double FEMALE_BAC_CONSTANT = .66;
 
     static final int ADD_DRINK_REQUEST_CODE = 1;
     static final int TIME_REQUEST_CODE = 2;
