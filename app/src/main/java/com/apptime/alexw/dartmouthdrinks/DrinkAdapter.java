@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by Alex W on 20/11/2017.
+ * Used to populate the listView (DrinksActivity) before the graph
  */
 
 public class DrinkAdapter extends BaseAdapter{
@@ -22,7 +23,7 @@ public class DrinkAdapter extends BaseAdapter{
     private List<Drink> mDataSource;
 
 
-
+    //constructor
     public DrinkAdapter(Context context, List<Drink> drinks) {
         mContext = context;
         mDataSource = drinks;
@@ -59,7 +60,7 @@ public class DrinkAdapter extends BaseAdapter{
         TextView percentTextView = rowView.findViewById(R.id.percentAlcoholTextView);
         TextView timeTextView = rowView.findViewById(R.id.timeTextView);
 
-
+        //set up date and time for when you had the drink
 
         Drink drink = (Drink) getItem(position);
 

@@ -10,6 +10,8 @@ import java.util.List;
 
 public class OnNight {
 
+    //tracks the activity for a given night
+
     private List<Drink> drinkList;
     private Date day;
 
@@ -22,10 +24,12 @@ public class OnNight {
 
     }
 
+    //adds a drink to the total for the night
     public void addDrink(Drink d) {
         drinkList.add(d);
     }
 
+    //getters and setters
     public Date getDay() {
         return day;
     }

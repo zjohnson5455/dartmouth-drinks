@@ -8,6 +8,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Utils {
 
+    //get the database
+
     private static FirebaseDatabase mDatabase;
 
     public static FirebaseDatabase getDatabase() {

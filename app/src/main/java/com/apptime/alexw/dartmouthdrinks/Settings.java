@@ -6,6 +6,8 @@ package com.apptime.alexw.dartmouthdrinks;
 
 public class Settings {
 
+    //gets the settings and controls them
+
     Boolean me;
     Boolean friends;
     Boolean organizer;
@@ -17,6 +19,8 @@ public class Settings {
         organizer = false;
         threshhold = 0.2;
     }
+
+    //getters and setters
 
     public Boolean getMe() {
         return me;

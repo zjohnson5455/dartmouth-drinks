@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class SignInActivity extends AppCompatActivity {
 
+    //handles sign in to firebase
+
     final static String TAG = "SignInActivity";
     EditText mEmailEditText;
     EditText mPasswordEditText;
@@ -36,6 +38,7 @@ public class SignInActivity extends AppCompatActivity {
         mEmailEditText = findViewById(R.id.sign_in_email);
         mPasswordEditText = findViewById(R.id.sign_in_password);
 
+        //if there's no user yet, get one
         if (FirebaseAuth.getInstance().getCurrentUser() != null){
             Intent add = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(add);
@@ -45,7 +48,10 @@ public class SignInActivity extends AppCompatActivity {
 
     }
 
+    //if you click onSignIn, match email and password to firebase database
     public void onSignInClick(View v) {
+
+        //if there is a username and password entered
 
         if (mEmailEditText.getText().toString().length() != 0 && mPasswordEditText.getText().toString().length() != 0) {
 
@@ -78,6 +84,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
     }
+    //if you click create an account, bring them to the appropriate page
 
     public void onCreateClick(View v) {
         Intent create = new Intent(getApplicationContext(), CreateAcctActivity.class);
@@ -85,6 +92,7 @@ public class SignInActivity extends AppCompatActivity {
         finish();
     }
 
+    //if you click on clear, clear the input
     public void signInOnClearClick(View v) {
         mEmailEditText.setText("");
         mPasswordEditText.setText("");

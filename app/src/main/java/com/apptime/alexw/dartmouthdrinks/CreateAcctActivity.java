@@ -26,6 +26,7 @@ public class CreateAcctActivity extends AppCompatActivity {
     final static String TAG = "Create activity";
 
 
+    //set up the fields as global and get them in onCreate
     EditText mEmailEditText;
     EditText mPasswordEditText;
     EditText mConfirmPasswordEditText;
@@ -44,6 +45,7 @@ public class CreateAcctActivity extends AppCompatActivity {
         mPasswordEditText = findViewById(R.id.create_acct_password);
         mConfirmPasswordEditText = findViewById(R.id.reconfirm_password);
 
+        //if there's already a user, then go straight to the WelcomeActivity
         if (FirebaseAuth.getInstance().getCurrentUser() != null){
             Intent add = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(add);
@@ -52,6 +54,7 @@ public class CreateAcctActivity extends AppCompatActivity {
 
     }
 
+    //when you click on the clear button
     public void createOnClearClick(View v) {
 
         mEmailEditText.setText("");
@@ -59,11 +62,14 @@ public class CreateAcctActivity extends AppCompatActivity {
         mConfirmPasswordEditText.setText("");
     }
 
+    //when you move on the next screen of the createAccount
     public void onNextClick(View v) {
 
+        //check password matching
         if (!mPasswordEditText.getText().toString().equals(mConfirmPasswordEditText.getText().toString())){
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
         }
+        //otherwise, if they do match, create a user
         else {
             mAuth.createUserWithEmailAndPassword(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString())
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -90,6 +96,7 @@ public class CreateAcctActivity extends AppCompatActivity {
         }
     }
 
+    //when you click sign in go to the SignInActivity
     public void onSignInClick(View v) {
         Intent intent = new Intent(mContext, SignInActivity.class);
         startActivity(intent);

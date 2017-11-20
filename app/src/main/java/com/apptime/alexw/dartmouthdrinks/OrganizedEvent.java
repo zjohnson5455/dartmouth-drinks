@@ -19,6 +19,7 @@ public class OrganizedEvent {
     private String contactNumber;
 
 
+    //set up an event that can have a geofence around it
 
     public OrganizedEvent(String name, double lat, double lng, double rad, double bac, String lst) {
         this.name = name;
@@ -30,10 +31,12 @@ public class OrganizedEvent {
 
     }
 
+    //need blank constructor for firebase
     public OrganizedEvent(){
 
     }
 
+    //check if location is within the fence
     public boolean isInFence(double lat, double lng) {
         float[] results = new float[1];
         Location.distanceBetween(lat, lng, latitude, longitude, results);
@@ -41,11 +44,13 @@ public class OrganizedEvent {
         return diffDist <= radius;
     }
 
+    //checks if conditions for notification apply and then returns number to which to send the message
     public String testNotify(double bac, double lat, double lng){
         if (bac > bacThreshold && isInFence(lat, lng)) return contactNumber;
         else return null;
     }
 
+    //getters and setters
     public String getContactNumbers(){
         return contactNumber;
     }

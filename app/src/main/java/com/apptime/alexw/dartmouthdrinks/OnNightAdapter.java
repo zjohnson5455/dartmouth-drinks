@@ -21,6 +21,7 @@ public class OnNightAdapter extends BaseAdapter{
     private List<OnNight> mDataSource;
 
 
+    //Helps build out history activity
 
     public OnNightAdapter(Context context, List<OnNight> onNights) {
         mContext = context;
@@ -52,6 +53,8 @@ public class OnNightAdapter extends BaseAdapter{
     public View getView(int position, View convertView, ViewGroup parent) {
         // Get view for row item
         View rowView = mInflater.inflate(R.layout.simple_row, parent, false);
+
+        //get the appropriate TextView and add it to the layout
 
         TextView rowTextView = rowView.findViewById(R.id.rowTextView);
 

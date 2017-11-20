@@ -28,6 +28,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    //gets settings and displays them and creates behavior to act accordingly
+
     DatabaseReference mDatabase;
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
@@ -63,6 +65,8 @@ public class SettingsActivity extends AppCompatActivity {
         mContext = this;
         mAuth = FirebaseAuth.getInstance();
 
+        //find fields
+
         mNameTextView = findViewById(R.id.nameTextView);
         mEmailTextView = findViewById(R.id.emailTextView);
         mWeightTextView = findViewById(R.id.weightTextView);
@@ -88,12 +92,14 @@ public class SettingsActivity extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
         databaseUser = Utils.getDatabase().getReference("users").child(currentUser.getUid());
 
+        //watch for data then make settings functional. Needs to be in here to access user
         databaseUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 currentTimeUser = dataSnapshot.getValue(User.class);
 
+                //get settings
                 settings = currentTimeUser.getSettings();
                 if (settings != null) {
                     me.setChecked(settings.getMe());
@@ -102,6 +108,7 @@ public class SettingsActivity extends AppCompatActivity {
                     bacET.setText(String.valueOf(settings.getThreshhold()));
                 }
 
+                //display profile info
                 phoneEditText.setText(currentTimeUser.getFriendNumber().toString());
                 mNameTextView.setText(currentTimeUser.getName().toString());
                 mEmailTextView.setText(currentUser.getEmail().toString());
@@ -109,6 +116,7 @@ public class SettingsActivity extends AppCompatActivity {
                 if (currentTimeUser.isMale()) mSexTextView.setText("Male");
                 else mSexTextView.setText("Female");
 
+                //listen for changed settings and update accordingly
                 me.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -119,6 +127,7 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 });
 
+                //check permissions and respond accordingly
                 friends.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -133,6 +142,8 @@ public class SettingsActivity extends AppCompatActivity {
                                         new String[]{Manifest.permission.SEND_SMS},
                                         Constants.PERMISSIONS_REQUEST_SMS_FRIEND);
                             }
+
+                            //set to checked
                             else {
                                 Settings newSettings = currentTimeUser.getSettings();
                                 newSettings.setFriends(b);
@@ -149,6 +160,7 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 });
 
+                //set Listeners to listen for data input, change. make sure to request permissions
                 bacButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -224,6 +236,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
+        //if you click sign out, go back to sign-in
 
         mSignOutButton = findViewById(R.id.sign_out_button);
         mSignOutButton.setOnClickListener(new View.OnClickListener() {
@@ -238,6 +251,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
     }
 
+    //if you click on explain, go to explain page
 
     public void onExplainClick(View v) {
         Intent explain = new Intent();
@@ -245,6 +259,7 @@ public class SettingsActivity extends AppCompatActivity {
         startActivity(explain);
     }
 
+    //request permissions
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {

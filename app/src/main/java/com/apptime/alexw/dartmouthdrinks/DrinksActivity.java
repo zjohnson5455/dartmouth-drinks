@@ -39,6 +39,7 @@ public class DrinksActivity extends AppCompatActivity {
         lv = findViewById(R.id.drinksListView);
         graphButton = findViewById(R.id.graphButton);
 
+        //if you hit graph, go to the graph activity
         graphButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +55,7 @@ public class DrinksActivity extends AppCompatActivity {
 
         databaseUser = Utils.getDatabase().getReference("users").child(currentUser.getUid());
 
+        //used to get the data to set up a drinksAdapter
         databaseUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

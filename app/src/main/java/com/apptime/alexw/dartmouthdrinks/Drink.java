@@ -6,6 +6,7 @@ import java.util.Date;
 
 /**
  * Created by briantomasco on 11/18/17.
+ * Defines what a drink is
  */
 
 public class Drink {
@@ -22,6 +23,8 @@ public class Drink {
         this.name = name;
         this.time = time;
         this.prevBac = bac;
+        this.time = time;
+        this.prevBac = bac; //stands for blood alcohol content
         this.amount = amount;
         this.percent = percent;
         alcohol = Formulas.drinkAlcoholContent(amount, percent);
@@ -32,6 +35,7 @@ public class Drink {
 
     }
 
+    //getters and setters
     public String getName() {
         return name;
     }

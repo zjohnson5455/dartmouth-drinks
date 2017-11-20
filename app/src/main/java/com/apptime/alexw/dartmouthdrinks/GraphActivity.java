@@ -23,6 +23,7 @@ import java.util.List;
 
 public class GraphActivity extends AppCompatActivity {
 
+//graphs the drink history
 
     DatabaseReference mDatabase;
     FirebaseAuth mAuth;
@@ -47,6 +48,7 @@ public class GraphActivity extends AppCompatActivity {
 
         databaseUser = Utils.getDatabase().getReference("users").child(currentUser.getUid());
 
+       //watch fields and then use data to make a graph
         databaseUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -60,6 +62,7 @@ public class GraphActivity extends AppCompatActivity {
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
                 });
 
+                //sort the drinks by what time they were had (could be out of order)
                 Collections.sort(drinks, new Comparator<Drink>() {
                     public int compare(Drink drink1, Drink drink2) {
                         if (drink1.getTime().before(drink2.getTime())) return -1;
@@ -67,12 +70,14 @@ public class GraphActivity extends AppCompatActivity {
                         return 0;
                     }});
 
+                //loop through the drinkList and add all relevant data
                 for (Drink drink:drinks) {
                     series.appendData(new DataPoint(new Date(drink.getTime().getTime()), drink.getPrevBac()), false, 100);
                     Long time = drink.getTime().getTime() + 1000; //This is weird, but having 2 identical times meant the vertical lines did not match up, so I bumped the second time on a second to allow vertical lines
                     series.appendData(new DataPoint(new Date(time), drink.getPostBac()), false, 100);
                 }
 
+                //add data to the graph
                 graph.addSeries(series);
                 graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
                 graph.getViewport().setScalable(true);

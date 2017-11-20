@@ -45,6 +45,7 @@ import static com.apptime.alexw.dartmouthdrinks.SignInActivity.TAG;
 
 /**
  * Created by zacharyjohnson on 11/19/17.
+ * Creates a continuously updating service with BAC info
  */
 
 public class ForegroundService extends Service implements LocationListener {
@@ -89,6 +90,7 @@ public class ForegroundService extends Service implements LocationListener {
         eventsList = new ArrayList<>();
         notifiedMap = new HashMap<>();
 
+        //get the settings information
         databaseUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -105,6 +107,7 @@ public class ForegroundService extends Service implements LocationListener {
 
         databaseEvents = Utils.getDatabase().getReference("events");
 
+        //get the events list
         databaseEvents.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -149,7 +152,7 @@ public class ForegroundService extends Service implements LocationListener {
 
 
 
-
+    //shows initial notification
     private void showNotification(){
 
         Log.d("SERVVY", "Tried to show notification");
@@ -159,6 +162,7 @@ public class ForegroundService extends Service implements LocationListener {
         PendingIntent mainPendingIntent = PendingIntent.getActivity(this, Constants.ADD_DRINK_REQUEST_CODE, mainIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
 
+        //setting onGoing makes it persist after close
         Notification.Builder builder = new Notification.Builder(this)
                 .setContentTitle("You're having a night out!")
                 .setContentText("Your BAC is at " + BAC)
@@ -176,6 +180,7 @@ public class ForegroundService extends Service implements LocationListener {
 
     }
 
+    //build a new notification to replace old
     private Notification getMyActivityNotification(String text){
         // The PendingIntent to launch our activity if the user selects
         // this notification
@@ -193,9 +198,8 @@ public class ForegroundService extends Service implements LocationListener {
         return notification;
     }
 
-    /**
-     * This is the method that can be called to update the Notification
-     */
+    // This is the method that can be called to update the Notification
+
     private void updateNotification() {
         String text = "Your BAC is " + BAC;
 
@@ -205,6 +209,7 @@ public class ForegroundService extends Service implements LocationListener {
         mNotificationManager.notify(NOTIF_ID, notification);
     }
 
+    //updates BAC continuously
     public void BACUpdate(){
         if (currentTimeUser != null) {
             BAC = currentTimeUser.getBac();
@@ -221,9 +226,11 @@ public class ForegroundService extends Service implements LocationListener {
                 stopSelf();
             }
         }
+        //check if settings exist and then call notify method
         if (settings != null) bacNotify();
     }
 
+    //send a notification if you pass a certain threshold
     public void bacNotify() {
         NotificationManager notificationManager = (NotificationManager) getSystemService(ForegroundService.NOTIFICATION_SERVICE);
 
@@ -254,6 +261,7 @@ public class ForegroundService extends Service implements LocationListener {
             notificationManager.cancel(3);
         }
 
+        //send a text if the user wants it
         if (BAC > settings.getThreshhold() && !texted && settings.getFriends()) {
 //            Intent textIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("sms:"
 //                    + currentTimeUser.getFriendNumber()));
@@ -267,6 +275,7 @@ public class ForegroundService extends Service implements LocationListener {
 
     }
 
+    //updates on interval
     class TimeDisplayTimerTask extends TimerTask {
 
         @Override
@@ -286,6 +295,7 @@ public class ForegroundService extends Service implements LocationListener {
 
     }
 
+    //checks permissions and finds the location
     protected void getLocation() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -304,6 +314,7 @@ public class ForegroundService extends Service implements LocationListener {
         }
     }
 
+    //when the location changes, go through the events list and send texts to organizers if necessary
     @Override
     public void onLocationChanged(Location location) {
         double lat = location.getLatitude();
@@ -335,6 +346,7 @@ public class ForegroundService extends Service implements LocationListener {
         }
     }
 
+    //send a text
     public void sendSMS(String phoneNo, String msg) {
         try {
             SmsManager smsManager = SmsManager.getDefault();
@@ -348,6 +360,7 @@ public class ForegroundService extends Service implements LocationListener {
         }
     }
 
+    //need these to implement LocationListener
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {}
 

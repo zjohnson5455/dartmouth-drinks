@@ -10,6 +10,7 @@ import android.view.View;
 
 public class ExplainActivity extends AppCompatActivity {
 
+    //set up explain activity from xml
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explain);

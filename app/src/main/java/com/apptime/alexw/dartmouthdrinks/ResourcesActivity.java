@@ -14,16 +14,18 @@ import com.google.android.gms.location.Geofence;
  */
 
 public class ResourcesActivity extends AppCompatActivity {
+    //gives information about campus resources
 
     public void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resource);
     }
-    //to test the service
+    //to test the service. Don't need anymore
     public void onRightsClick(View v) {
 
     }
 
+    //secret way of stopping service. For debugging purposes
     public void onEmergencyClicked(View v) {
         Intent service = new Intent();
         Log.d("SERVVY", "Reached OnCLick");

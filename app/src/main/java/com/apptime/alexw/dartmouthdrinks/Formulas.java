@@ -5,10 +5,12 @@ import android.util.Log;
 
 /**
  * Created by briantomasco on 11/18/17.
+ * BAC formulas
  */
 
 public class Formulas {
 
+    //uses Widmark formula to calculate BAC
     public static double calculateBac (User user, Drink drink, double timeSinceCalc, double timeSinceDrink) {
         double changeInBac;
 
@@ -26,28 +28,34 @@ public class Formulas {
         return currentBac;
     }
 
+    //factors in metabolism to the calculation
     public static double bacMetabolism(double prevBac, double timeDiff) {
         double newBac = prevBac - (minToHours(timeDiff) * Constants.ALCOHOL_METABOLISM_RATE);
         if (newBac <= 0) return 0.0;
         else return newBac;
     }
 
+    //factors in how alcoholic the drink is
     public static double drinkAlcoholContent(double amount, double percent){
         return amount * percent;
     }
 
+    //converts minutes to hours
     public static double minToHours(double minutes){
         return ((double)minutes)/60.0;
     }
 
+    //milliseconds to minutes
     public static double milliToMinutes (long milliseconds) {
         return ((double)milliseconds / (double)Constants.MILLISECONDS_PER_MINUTE);
     }
 
+    //minutes to milliseconds
     public static long minutesToMilli (double minutes) {
         return (long)(minutes * Constants.MILLISECONDS_PER_MINUTE);
     }
 
+    //set criteria for location
     protected static Criteria getCriteria() {
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);

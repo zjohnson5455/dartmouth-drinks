@@ -23,6 +23,7 @@ import java.util.Calendar;
 
 public class TimeDrinkActivity extends FragmentActivity {
 
+//user enters how long ago they had the drink
 
     EditText back_time_edit_text;
     Button subtractButton;
@@ -32,10 +33,13 @@ public class TimeDrinkActivity extends FragmentActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_time_drink);
+
+        //get variables
         back_time_edit_text = findViewById(R.id.time_picker);
         subtractButton = findViewById(R.id.subtract_button);
         addButton = findViewById(R.id.add_button);
 
+        //if you hit subtract button, reduce time since by 5 minutes, but not below 0
         subtractButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,6 +51,7 @@ public class TimeDrinkActivity extends FragmentActivity {
             }
         });
 
+        //if you hit add button, add time by 5 minutes, but checking that it will still have an effect
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,32 +66,15 @@ public class TimeDrinkActivity extends FragmentActivity {
         result  = getIntent();
     }
 
+    //when you hit set, send data back to calling activity
     public void onSetClick(View v) {
 
 
         int timeOff = Integer.valueOf(back_time_edit_text.getText().toString());
-//        Calendar calendar = Calendar.getInstance();
-//
-//        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-//        int min = calendar.get(Calendar.MINUTE);
-//
-//
-//        //TODO do something with these new times and fix midnight problem
-//        if (time_off > 60) {
-//            int sub_hours = time_off/60;
-//            int subtract = sub_hours * 60 ;
-//            int min_off = time_off - subtract;
-//            int new_hour = hour - sub_hours;
-//            int new_min = min - min_off;
          result.putExtra("time", timeOff);
          setResult(RESULT_OK, result);
          finish();
 
-//        }
-//        else {
-//            int small_min = min - time_off;
-//        }
-//
     }
 
 

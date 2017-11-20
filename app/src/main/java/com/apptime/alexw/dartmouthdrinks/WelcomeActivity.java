@@ -30,6 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 
 public class WelcomeActivity extends AppCompatActivity {
 
+    //welcome user and provide central navigation screen
+
     DatabaseReference mDatabase;
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
@@ -54,6 +56,7 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
+        //get components
         mResourceButton = findViewById(R.id.resourceButton);
         mHistoryButton = findViewById(R.id.historyButton);
         mSettingsImageButton = findViewById(R.id.settingsImageButton);
@@ -66,6 +69,7 @@ public class WelcomeActivity extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
         databaseUser = Utils.getDatabase().getReference("users").child(currentUser.getUid());
 
+        //watch for data and get the settings
         databaseUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -81,6 +85,7 @@ public class WelcomeActivity extends AppCompatActivity {
         });
 
 
+        //set listeners and bring user to corresponding pages onClick
         mResourceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,6 +104,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
 
 
+        //make sure to check permissions to start
         startNightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,6 +121,7 @@ public class WelcomeActivity extends AppCompatActivity {
         });
     }
 
+    //check if service is running
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -125,6 +132,7 @@ public class WelcomeActivity extends AppCompatActivity {
         return false;
     }
 
+    //finalize permissions
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String permissions[], int[] grantResults) {
@@ -172,6 +180,7 @@ public class WelcomeActivity extends AppCompatActivity {
         }
     }
 
+    //check permissions
     public void checkFriendPermissionsToStart() {
         if (settings.getFriends()) {
             if (ContextCompat.checkSelfPermission(getApplicationContext(),
@@ -190,6 +199,8 @@ public class WelcomeActivity extends AppCompatActivity {
         }
         else checkOrganizerPermissionsToStart();
     }
+
+    //check permissions for organizers
 
     public void checkOrganizerPermissionsToStart() {
         if (settings.getOrganizer()){
@@ -217,7 +228,7 @@ public class WelcomeActivity extends AppCompatActivity {
         }
         else sendStartIntent();
     }
-
+    //start the add activity and the service
     public void sendStartIntent() {
         Intent intent = new Intent(mContext, AddActivity.class);
         intent.putExtra("Start night", true);

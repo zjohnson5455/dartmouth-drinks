@@ -20,6 +20,7 @@ import java.util.HashMap;
 
 /**
  * Created by zacharyjohnson on 11/18/17.
+ * Asks weight and sex
  */
 
 public class CreateNextActivity extends AppCompatActivity {
@@ -42,6 +43,7 @@ public class CreateNextActivity extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
 
 
+        //create spinner
         mSexSpinner = findViewById(R.id.create_acct_sex);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.Sex, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -55,8 +57,10 @@ public class CreateNextActivity extends AppCompatActivity {
 
     }
 
+    //when you click create an account...
     public void onCreateClick(View v) {
-        //TODO fix intents
+
+        //if you have valid input, create a user in firebase
 
         if (mNameEditText.getText().toString().length() != 0 && mWeightEditText.getText().toString().length() != 0 && !mSexSpinner.getSelectedItem().toString().equals("---")){
             //do a thing: user initialise

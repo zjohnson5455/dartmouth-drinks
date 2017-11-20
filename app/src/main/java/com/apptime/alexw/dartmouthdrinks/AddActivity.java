@@ -46,14 +46,19 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
     Button mResourceButton;
     Button mHistoryButton;
     ImageButton mSettingsImageButton;
+
+    //different types of alcoholic intake
     ImageView mCupImageView;
     ImageView mPongImageView;
     ImageView mCanImageView;
     ImageView mShotImageView;
     ImageView mWineImageView;
     Context mContext;
+
+    //Your BAC
     TextView mBACTextView;
 
+    //Firebase variables to find the currentUser
     DatabaseReference mDatabase;
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
@@ -77,15 +82,15 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
         mBACTextView = findViewById(R.id.bacTextView);
 
 
+        //get the current user
         mDatabase = Utils.getDatabase().getReference();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
-//        eventsList = new ArrayList<>();
-//        notifiedMap = new HashMap<>();
-
+        //check if a night has been started
         start = getIntent().getBooleanExtra("Start night", false);
 
+        //send users to appropriately titled pages when clicked
         mResourceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -118,6 +123,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
             }
         });
 
+        //because there is no second page for this type, put the variables in the intent
         mCanImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,6 +165,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
+                //do calculations using currentTimeUser in here
                 currentTimeUser = dataSnapshot.getValue(User.class);
                 double bac = dataSnapshot.getValue(User.class).getBac();
                 setBacColor(bac);
@@ -173,24 +180,6 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
             }
         });
 
-//        databaseEvents = Utils.getDatabase().getReference("events");
-//
-//        databaseEvents.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for(DataSnapshot eventSnapshot:dataSnapshot.getChildren()) {
-//                    OrganizedEvent event = eventSnapshot.getValue(OrganizedEvent.class);
-//                    eventsList.add(event);
-//                    notifiedMap.put(event, false);
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-
         mHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,6 +189,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
         });
     }
 
+    //when you get back how long ago the drink was, calculate the new BAC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if ((requestCode == Constants.ADD_DRINK_REQUEST_CODE || requestCode == Constants.TIME_REQUEST_CODE)
@@ -207,6 +197,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
 
             Date currentTime = new Date();
 
+            //set variables
             String name = data.getStringExtra("name");
             double amount = data.getDoubleExtra("amount", 0.0);
             double percent = data.getDoubleExtra("percent", 0.0);
@@ -216,10 +207,12 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
 
             Drink newDrink = new Drink(name, drinkTime, prevBac, amount, percent);
 
+            //if this is the first drink
             if (prevBac == 0.0) {
                 currentTimeUser.setTimeOfLastCalc(currentTime);
             }
 
+            //update
             double timeSinceCalc = Formulas.milliToMinutes(currentTime.getTime() - currentTimeUser.getTimeOfLastCalc().getTime());
 
             double bac = Formulas.calculateBac(currentTimeUser, newDrink, timeSinceCalc, timeSinceDrink);
@@ -229,6 +222,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
             Log.d("LOG", "onActivityResult: " + bac);
             currentTimeUser.setTimeOfLastCalc(currentTime);
 
+            //record the history of the drinks
             ArrayList<OnNight> history = currentTimeUser.getHistory();
             OnNight currentNight;
 
@@ -243,6 +237,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
                 currentNight = history.remove(history.size()-1);
             }
 
+            //add to the history tabs
             currentNight.addDrink(newDrink);
             if (history == null) history = new ArrayList<OnNight>();
             history.add(currentNight);
@@ -253,36 +248,11 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
         }
     }
 
+    //when you click on your BAC
     public void onBACClick(View v) {
         Intent info = new Intent("INFO");
         startActivity(info);
     }
-
-//    private boolean checkPermissions() {
-//        return ContextCompat.checkSelfPermission(this,
-//                android.Manifest.permission.ACCESS_FINE_LOCATION)
-//                == PackageManager.PERMISSION_GRANTED;
-//    }
-//
-//
-//    private void requestPermissions() {
-//        ActivityCompat.requestPermissions(this,
-//                new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-//                Constants.PERMISSIONS_REQUEST_FINE_LOCATION);
-//    }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-//                                           @NonNull int[] grantResults) {
-//        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//            Intent intent = new Intent(mContext, AddActivity.class);
-//            intent.putExtra("Start night", true);
-//            startActivity(intent);
-//        }
-//        else {
-//            Toast.makeText(getApplicationContext(), "Cannot proceed without location permission", Toast.LENGTH_SHORT).show();
-//        }
-//    }
 
     @Override
     public void onDestroy(){
@@ -290,6 +260,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
         Log.d("CYCLE", "onDestroy");
     }
 
+    //need these methods to implement LocationListener
     @Override
     public void onLocationChanged(Location location) {
 
@@ -304,6 +275,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
     @Override
     public void onProviderDisabled(String provider) {}
 
+    //set what color your BAC is
     public void setBacColor(double bac){
         if (bac < 0.05) mBACTextView.setTextColor(Color.parseColor("#1dff00"));
         else if (bac < 0.1) mBACTextView.setTextColor(Color.parseColor("#a5ff00"));

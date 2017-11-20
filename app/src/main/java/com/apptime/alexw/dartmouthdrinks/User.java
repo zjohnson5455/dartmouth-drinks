@@ -11,6 +11,8 @@ import java.util.Map;
 
 public class User {
 
+    //user information
+
     private String userId;
     private String name;
     private int weight;
@@ -35,17 +37,18 @@ public class User {
         history = list;
     }
 
+    //blank constructor needed for firebase
     public User(){
 
     }
 
-    //public String getNumber() {
-     //   return number;
-    //}
 
+//add an on night to the history tab
     public void addOnNight(OnNight night) {
         history.add(night);
     }
+
+    //getters and setters
 
     public String getUserId() {
         return userId;

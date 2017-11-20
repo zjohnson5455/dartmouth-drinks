@@ -8,8 +8,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+//dictates behavior for the beer category
+
 public class BeerActivity extends AppCompatActivity {
 
+    //different levels of beer in a cup
     ImageView mFullBeer;
     ImageView mHalFBeer;
     ImageView mQuarterBeer;
@@ -26,9 +29,11 @@ public class BeerActivity extends AppCompatActivity {
         mHalFBeer = findViewById(R.id.halfImageView);
         mQuarterBeer = findViewById(R.id.quarterImageView);
 
+        //set up an intent to go to TimeDrink and put the percentage alcohol in
         final Intent result = new Intent(this, TimeDrinkActivity.class);
         result.putExtra("percent", .045);
 
+        //set click listeners for the various icons and send names and volumes based on features
         mFullBeer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +74,7 @@ public class BeerActivity extends AppCompatActivity {
         });
     }
 
+    //when you get the result, pass it back to the AddActivity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 

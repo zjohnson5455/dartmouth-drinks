@@ -2,6 +2,7 @@ package com.apptime.alexw.dartmouthdrinks;
 
 /**
  * Created by briantomasco on 11/18/17.
+ * Defines constants for the project
  */
 
 public class Constants {

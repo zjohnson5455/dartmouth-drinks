@@ -19,6 +19,8 @@ import java.util.List;
 
 public class HistoryActivity extends AppCompatActivity {
 
+    //displays the drink history
+
     private ListView lv;
     DatabaseReference mDatabase;
     FirebaseAuth mAuth;
@@ -42,6 +44,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         databaseUser = Utils.getDatabase().getReference("users").child(currentUser.getUid());
 
+        //watch the fields for data then create a new OnNight adapter and start the Drinks class
         databaseUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
