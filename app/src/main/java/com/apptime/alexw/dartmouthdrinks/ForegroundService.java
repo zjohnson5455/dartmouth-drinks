@@ -57,6 +57,9 @@ public class ForegroundService extends Service implements LocationListener {
     private Handler mHandler = new Handler();
     // timer handling
     private Timer mTimer = null;
+    Settings settings;
+    double maxBAC;
+    boolean me;
 
 
     @Override
@@ -73,7 +76,7 @@ public class ForegroundService extends Service implements LocationListener {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 currentTimeUser = dataSnapshot.getValue(User.class);
-
+                settings = dataSnapshot.getValue(User.class).getSettings();
             }
 
             @Override
@@ -182,8 +185,7 @@ public class ForegroundService extends Service implements LocationListener {
             BAC = user.getBac();
 
         }
-
-        bacNotify();
+        if (settings != null) bacNotify();
     }
 
     public void bacNotify() {
@@ -194,7 +196,8 @@ public class ForegroundService extends Service implements LocationListener {
 
 
         //if you're within the listed distance and you haven't recently sent a notification
-        if (BAC > 0.2 && notified == false) {
+
+        if (BAC > settings.getThreshhold() && !notified && settings.getMe()) {
             Notification.Builder builder1 = new Notification.Builder(this)
                     .setContentTitle("You're over the limit!")
                     .setContentText("Your BAC is at " + BAC)
@@ -210,7 +213,7 @@ public class ForegroundService extends Service implements LocationListener {
             notified = true;
         }
 
-        else if (BAC < 0.2 && notified == true) {
+        else if (BAC < settings.getThreshhold() && notified == true) {
             notified = false;
             notificationManager.cancel(3);
         }
