@@ -17,11 +17,26 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
 /**
  * Created by zacharyjohnson on 11/19/17.
  */
 
 public class WelcomeActivity extends AppCompatActivity {
+
+    DatabaseReference mDatabase;
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+    DatabaseReference databaseUser;
+    User currentTimeUser;
+
+    Settings settings;
 
     Button mResourceButton;
     ImageButton mSettingsImageButton;
@@ -44,6 +59,27 @@ public class WelcomeActivity extends AppCompatActivity {
         mSettingsImageButton = findViewById(R.id.settingsImageButton);
         startNightButton = findViewById(R.id.start_night_button);
         mContext = this;
+        mAuth = FirebaseAuth.getInstance();
+
+        mDatabase = Utils.getDatabase().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        databaseUser = Utils.getDatabase().getReference("users").child(currentUser.getUid());
+
+        databaseUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                currentTimeUser = dataSnapshot.getValue(User.class);
+                settings = currentTimeUser.getSettings();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
 
         mResourceButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,14 +102,7 @@ public class WelcomeActivity extends AppCompatActivity {
         startNightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, AddActivity.class);
-                intent.putExtra("Start night", true);
-                startActivity(intent);
-                Intent service = new Intent();
-                Log.d("SERVVY", "Reached OnCLick");
-                service.setClass(getApplicationContext(), ForegroundService.class);
-                startService(service);
-                finish();
+                checkFriendPermissionsToStart();
             }
         });
 
@@ -94,5 +123,112 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+
+        switch (requestCode) {
+            case Constants.PERMISSIONS_REQUEST_SMS_FRIEND: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    checkOrganizerPermissionsToStart();
+                }
+                else {
+                    needPermissions();
+                }
+            }
+            case Constants.PERMISSIONS_REQUEST_SMS_ORG: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            != PackageManager.PERMISSION_GRANTED) {
+
+                        // if not, request it, tell user it is needed
+                        Toast.makeText(getApplicationContext(), "Location needed to activate option", Toast.LENGTH_SHORT).show();
+                        ActivityCompat.requestPermissions(WelcomeActivity.this,
+                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                Constants.PERMISSIONS_REQUEST_FINE_LOCATION);
+                    }
+                    else {
+                        sendStartIntent();
+                    }
+                }
+                else {
+                    needPermissions();
+                }
+            }
+            case Constants.PERMISSIONS_REQUEST_FINE_LOCATION: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    sendStartIntent();
+                }
+                else{
+                    needPermissions();
+                }
+            }
+        }
+    }
+
+    public void checkFriendPermissionsToStart() {
+        if (settings.getFriends()) {
+            if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                    Manifest.permission.SEND_SMS)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // if not, request it, tell user it is needed
+                Toast.makeText(getApplicationContext(), "SMS needed to proceed", Toast.LENGTH_SHORT).show();
+                ActivityCompat.requestPermissions(WelcomeActivity.this,
+                        new String[]{Manifest.permission.SEND_SMS},
+                        Constants.PERMISSIONS_REQUEST_SMS_FRIEND);
+            }
+            else {
+                checkOrganizerPermissionsToStart();
+            }
+        }
+        else checkOrganizerPermissionsToStart();
+    }
+
+    public void checkOrganizerPermissionsToStart() {
+        if (settings.getOrganizer()){
+            if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                    Manifest.permission.SEND_SMS)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // if not, request it, tell user it is needed
+                Toast.makeText(getApplicationContext(), "Location needed to activate option", Toast.LENGTH_SHORT).show();
+                ActivityCompat.requestPermissions(WelcomeActivity.this,
+                        new String[]{Manifest.permission.SEND_SMS},
+                        Constants.PERMISSIONS_REQUEST_SMS_ORG);
+            }
+            else if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                // if not, request it, tell user it is needed
+                Toast.makeText(getApplicationContext(), "Location needed to activate option", Toast.LENGTH_SHORT).show();
+                ActivityCompat.requestPermissions(WelcomeActivity.this,
+                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                        Constants.PERMISSIONS_REQUEST_FINE_LOCATION);
+            }
+            else sendStartIntent();
+        }
+        else sendStartIntent();
+    }
+
+    public void sendStartIntent() {
+        Intent intent = new Intent(mContext, AddActivity.class);
+        intent.putExtra("Start night", true);
+        startActivity(intent);
+        Intent service = new Intent();
+        service.setClass(getApplicationContext(), ForegroundService.class);
+        startService(service);
+        finish();
+    }
+
+    public void needPermissions(){
+        Toast.makeText(getApplicationContext(), "Need permissions to continue", Toast.LENGTH_SHORT).show();
     }
 }
