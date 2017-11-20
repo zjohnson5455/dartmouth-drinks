@@ -71,7 +71,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void onCreateClick(View v) {
-        Intent create = new Intent("CREATE");
+        Intent create = new Intent(this, CreateAcctActivity.class);
         startActivity(create);
         finish();
     }

@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class AddActivity extends AppCompatActivity {
 
@@ -108,12 +110,20 @@ public class AddActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == Constants.ADD_DRINK_REQUEST_CODE && resultCode == RESULT_OK) {
-
-        }
-
-        if (requestCode == Constants.TIME_REQUEST_CODE && resultCode == RESULT_OK) {
-
+        if ((requestCode == Constants.ADD_DRINK_REQUEST_CODE || requestCode == Constants.TIME_REQUEST_CODE)
+                && resultCode == RESULT_OK) {
+            String name = data.getStringExtra("name");
+            double amount = data.getDoubleExtra("amount", 0.0);
+            double percent = data.getDoubleExtra("percent", 0.0);
+            double alcohol = Formulas.drinkAlcoholContent(amount, percent);
+            double prevBac = 0.0; // placeholder
+            int timeSinceCalc = 0;
+            int timeSinceDrink = data.getIntExtra("time", 0);
+            Log.d("BAC", name);
+            double bac = Formulas.calculateBac(true, 135, prevBac, alcohol, timeSinceCalc, timeSinceDrink);
+            Log.d("BAC", Double.toString(alcohol));
+            Log.d("BAC", Double.toString(bac));
+            Toast.makeText(getApplicationContext(), Double.toString(bac), Toast.LENGTH_SHORT).show();
         }
     }
 
