@@ -37,7 +37,7 @@ public class SignInActivity extends AppCompatActivity {
         mPasswordEditText = findViewById(R.id.sign_in_password);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null){
-            Intent add = new Intent(getApplicationContext(), AddActivity.class);
+            Intent add = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(add);
             finish();
         }
