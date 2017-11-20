@@ -194,7 +194,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:gravity="right"
             android:orientation="horizontal">
 
             <EditText
@@ -202,14 +202,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:ems="5"
+                android:gravity="center"
                 android:inputType="numberDecimal"
                 android:text="0.2" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/bacButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="OK" />
 
         </LinearLayout>
 
@@ -224,20 +225,28 @@
                 android:textSize="24dp"
                 android:id="@+id/ContactTextView" />
 
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+
             <EditText
-                android:id="@+id/ContactEditText"
+                android:id="@+id/numberEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:ems="10"
+                android:gravity="center"
+                android:inputType="phone" />
+
+            <Button
+                android:id="@+id/numberButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
-                android:ems="5"
-                android:text=""
-                android:inputType="numberDecimal"
-                android:focusedByDefault="false"/>
+                android:text="OK" />
 
-
-
-        </RelativeLayout>
+        </LinearLayout>
 
 
         <LinearLayout
@@ -246,16 +255,14 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="48dp"
             android:padding="8dp">
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="57dp"
                 android:onClick="onExplainClick"
-                android:text="Explain" />
+                android:text="Learn More" />
 
         </LinearLayout>
 

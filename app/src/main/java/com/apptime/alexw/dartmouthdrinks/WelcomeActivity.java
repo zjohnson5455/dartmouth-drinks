@@ -66,19 +66,14 @@ public class WelcomeActivity extends AppCompatActivity {
         startNightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkPermissions()) {
-                    Intent intent = new Intent(mContext, AddActivity.class);
-                    intent.putExtra("Start night", true);
-                    startActivity(intent);
-                    Intent service = new Intent();
-                    service.setClass(getApplicationContext(), ForegroundService.class);
-                    startService(service);
-                    finish();
-                }
-                else {
-                    Toast.makeText(getApplicationContext(), "Location permission needed to proceed", Toast.LENGTH_SHORT).show();
-                    requestPermissions();
-                }
+                Intent intent = new Intent(mContext, AddActivity.class);
+                intent.putExtra("Start night", true);
+                startActivity(intent);
+                Intent service = new Intent();
+                Log.d("SERVVY", "Reached OnCLick");
+                service.setClass(getApplicationContext(), ForegroundService.class);
+                startService(service);
+                finish();
             }
         });
 
@@ -89,32 +84,6 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    private boolean checkPermissions() {
-        return ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED;
-    }
-
-
-    private void requestPermissions() {
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                Constants.PERMISSIONS_REQUEST_FINE_LOCATION);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(mContext, AddActivity.class);
-            intent.putExtra("Start night", true);
-            startActivity(intent);
-        }
-        else {
-            Toast.makeText(getApplicationContext(), "Cannot proceed without location permission", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {

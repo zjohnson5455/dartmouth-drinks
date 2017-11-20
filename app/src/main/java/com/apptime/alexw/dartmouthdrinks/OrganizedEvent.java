@@ -2,50 +2,47 @@ package com.apptime.alexw.dartmouthdrinks;
 
 import android.location.Location;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.util.Date;
-import java.util.List;
 
 /**
- * Created by briantomasco on 11/20/17.
+ * Created by Alex W on 20/11/2017.
  */
+import com.google.android.gms.maps.model.LatLng;
 
 public class OrganizedEvent {
 
     private String name;
-    private LatLng position;
+    Double latitude;
+    Double longitude;
     private double radius;
     private double bacThreshold;
     private String contactNumber;
-    private boolean active;
-    private Date startTime;
-    private Date endTime;
+
+
 
     public OrganizedEvent(String name, double lat, double lng, double rad, double bac, String lst) {
         this.name = name;
-        position = new LatLng(lat, lng);
+        latitude = lat;
+        longitude = lng;
         radius = rad;
         bacThreshold = bac;
         contactNumber = lst;
-        active = false;
-        startTime = null;
-        endTime = null;
+
     }
 
     public OrganizedEvent(){
 
     }
 
-    public boolean isInFence(LatLng pos) {
+    public boolean isInFence(double lat, double lng) {
         float[] results = new float[1];
-        Location.distanceBetween(pos.latitude, pos.longitude, position.latitude, position.longitude, results);
+        Location.distanceBetween(lat, lng, latitude, longitude, results);
         float diffDist = results[0];
         return diffDist <= radius;
     }
 
-    public String testNotify(double bac, LatLng pos){
-        if (bac > bacThreshold && isInFence(pos)) return contactNumber;
+    public String testNotify(double bac, double lat, double lng){
+        if (bac > bacThreshold && isInFence(lat, lng)) return contactNumber;
         else return null;
     }
 
@@ -57,27 +54,35 @@ public class OrganizedEvent {
         contactNumber = number;
     }
 
-    public boolean isActive() {
-        return active;
+    public String getName() {
+        return name;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public Date getStartTime() {
-        return startTime;
+    public double getRadius() {
+        return radius;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setRadius(double radius) {
+        this.radius = radius;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public double getBacThreshold() {
+        return bacThreshold;
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void setBacThreshold(double bacThreshold) {
+        this.bacThreshold = bacThreshold;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 }

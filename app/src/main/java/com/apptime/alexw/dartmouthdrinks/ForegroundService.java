@@ -8,15 +8,20 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -25,8 +30,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -47,7 +55,10 @@ public class ForegroundService extends Service implements LocationListener {
     Context context;
     Notification notification;
     boolean notified = false;
+
+    DatabaseReference databaseEvents;
     List<OrganizedEvent> eventsList;
+    Map<OrganizedEvent, Boolean> notifiedMap;
 
     // constant
     public static final long NOTIFY_INTERVAL = 2000; // 1 second
@@ -71,6 +82,9 @@ public class ForegroundService extends Service implements LocationListener {
         currentUser = mAuth.getCurrentUser();
         databaseUser = Utils.getDatabase().getReference("users").child(currentUser.getUid());
 
+        eventsList = new ArrayList<>();
+        notifiedMap = new HashMap<>();
+
         databaseUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -85,14 +99,28 @@ public class ForegroundService extends Service implements LocationListener {
             }
         });
 
-        Log.d("SERVVY", "Received Start Foreground Intent");
+        databaseEvents = Utils.getDatabase().getReference("events");
+
+        databaseEvents.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot eventSnapshot:dataSnapshot.getChildren()) {
+                    OrganizedEvent event = eventSnapshot.getValue(OrganizedEvent.class);
+                    eventsList.add(event);
+                    notifiedMap.put(event, false);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
     //runs when service is started up
     public int onStartCommand(Intent intent, int flags, int startId) {
-
-        Log.d("SERVVY", "Received Start Foreground Intent");
 
         // cancel if already existed
         if(mTimer != null) {
@@ -104,6 +132,7 @@ public class ForegroundService extends Service implements LocationListener {
         // schedule task
         mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 0, NOTIFY_INTERVAL);
 
+        getLocation();
         showNotification();
         return super.onStartCommand(intent, flags, startId);
     }
@@ -239,8 +268,40 @@ public class ForegroundService extends Service implements LocationListener {
 
     }
 
+    protected void getLocation() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            Criteria criteria = Formulas.getCriteria();
+            String provider;
+            LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+            if (locationManager != null) {
+                provider = locationManager.getBestProvider(criteria, true);
+                Location loc = locationManager.getLastKnownLocation(provider);
+
+                //this line is necessary to make sure you continue to update location after the first request
+                locationManager.requestLocationUpdates(provider,0,0,this);
+            }
+        }
+    }
+
     @Override
-    public void onLocationChanged(Location location) {}
+    public void onLocationChanged(Location location) {
+        double lat = location.getLatitude();
+        double lng = location.getLongitude();
+        if (settings.getOrganizer()) {
+            for (OrganizedEvent event : eventsList) {
+                if (!notifiedMap.get(event)) {
+                    String target = event.testNotify(BAC, lat, lng);
+                    if (target != null) {
+                        Log.d("TEXT", target);
+                        notifiedMap.put(event, true);
+                    }
+                }
+            }
+        }
+    }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {}

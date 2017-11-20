@@ -1,5 +1,6 @@
 package com.apptime.alexw.dartmouthdrinks;
 
+import android.location.Criteria;
 import android.util.Log;
 
 /**
@@ -45,5 +46,16 @@ public class Formulas {
 
     public static long minutesToMilli (double minutes) {
         return (long)(minutes * Constants.MILLISECONDS_PER_MINUTE);
+    }
+
+    protected static Criteria getCriteria() {
+        Criteria criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_FINE);
+        criteria.setPowerRequirement(Criteria.POWER_LOW);
+        criteria.setAltitudeRequired(true);
+        criteria.setBearingRequired(false);
+        criteria.setSpeedRequired(true);
+        criteria.setCostAllowed(true);
+        return criteria;
     }
 }

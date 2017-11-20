@@ -1,7 +1,12 @@
 package com.apptime.alexw.dartmouthdrinks;
 
+import android.*;
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +17,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -106,20 +112,70 @@ public class SettingsActivity extends AppCompatActivity {
                 friends.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        Settings newSettings = currentTimeUser.getSettings();
-                        newSettings.setFriends(b);
-                        currentTimeUser.setSettings(newSettings);
-                        mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                        if (b) {
+                            if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                                    Manifest.permission.SEND_SMS)
+                                    != PackageManager.PERMISSION_GRANTED) {
+
+                                // if not, request it, tell user it is needed
+                                Toast.makeText(getApplicationContext(), "SMS needed to activate option", Toast.LENGTH_SHORT).show();
+                                ActivityCompat.requestPermissions(SettingsActivity.this,
+                                        new String[]{Manifest.permission.SEND_SMS},
+                                        Constants.PERMISSIONS_REQUEST_SMS_FRIEND);
+                            }
+                            else {
+                                Settings newSettings = currentTimeUser.getSettings();
+                                newSettings.setFriends(b);
+                                currentTimeUser.setSettings(newSettings);
+                                mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                            }
+                        }
+                        else {
+                            Settings newSettings = currentTimeUser.getSettings();
+                            newSettings.setFriends(b);
+                            currentTimeUser.setSettings(newSettings);
+                            mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                        }
                     }
                 });
 
                 organizer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                        Settings newSettings = currentTimeUser.getSettings();
-                        newSettings.setOrganizer(b);
-                        currentTimeUser.setSettings(newSettings);
-                        mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                        if (b) {
+                            if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                                    Manifest.permission.SEND_SMS)
+                                    != PackageManager.PERMISSION_GRANTED) {
+
+                                // if not, request it, tell user it is needed
+                                Toast.makeText(getApplicationContext(), "SMS needed to activate option", Toast.LENGTH_SHORT).show();
+                                ActivityCompat.requestPermissions(SettingsActivity.this,
+                                        new String[]{Manifest.permission.SEND_SMS},
+                                        Constants.PERMISSIONS_REQUEST_SMS_FRIEND);
+                            }
+                            else if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                                    Manifest.permission.ACCESS_FINE_LOCATION)
+                                    != PackageManager.PERMISSION_GRANTED) {
+
+                                // if not, request it, tell user it is needed
+                                Toast.makeText(getApplicationContext(), "Location needed to activate option", Toast.LENGTH_SHORT).show();
+                                ActivityCompat.requestPermissions(SettingsActivity.this,
+                                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                        Constants.PERMISSIONS_REQUEST_FINE_LOCATION);
+                            }
+                            else {
+                                Settings newSettings = currentTimeUser.getSettings();
+                                newSettings.setOrganizer(b);
+                                currentTimeUser.setSettings(newSettings);
+                                mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                            }
+                        }
+                        else {
+                            Settings newSettings = currentTimeUser.getSettings();
+                            newSettings.setOrganizer(b);
+                            currentTimeUser.setSettings(newSettings);
+                            mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                        }
                     }
                 });
 
@@ -177,5 +233,52 @@ public class SettingsActivity extends AppCompatActivity {
         Intent explain = new Intent();
         explain.setClass(getApplicationContext(), ExplainActivity.class);
         startActivity(explain);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+
+        switch (requestCode) {
+            case Constants.PERMISSIONS_REQUEST_SMS_FRIEND: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Settings newSettings = currentTimeUser.getSettings();
+                    newSettings.setFriends(true);
+                    currentTimeUser.setSettings(newSettings);
+                    mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                }
+            }
+            case Constants.PERMISSIONS_REQUEST_SMS_ORG: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                            Manifest.permission.ACCESS_FINE_LOCATION)
+                            != PackageManager.PERMISSION_GRANTED) {
+
+                        // if not, request it, tell user it is needed
+                        Toast.makeText(getApplicationContext(), "Location needed to activate option", Toast.LENGTH_SHORT).show();
+                        ActivityCompat.requestPermissions(SettingsActivity.this,
+                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                                Constants.PERMISSIONS_REQUEST_FINE_LOCATION);
+                    }
+                    else {
+                        Settings newSettings = currentTimeUser.getSettings();
+                        newSettings.setOrganizer(true);
+                        currentTimeUser.setSettings(newSettings);
+                        mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                    }
+                }
+            }
+            case Constants.PERMISSIONS_REQUEST_FINE_LOCATION: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Settings newSettings = currentTimeUser.getSettings();
+                    newSettings.setOrganizer(true);
+                    currentTimeUser.setSettings(newSettings);
+                    mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                }
+            }
+        }
     }
 }

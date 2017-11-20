@@ -57,18 +57,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     DatabaseReference databaseUser;
-    DatabaseReference databaseEvents;
     User currentTimeUser;
-
-    List<OrganizedEvent> eventsList;
-    Map<OrganizedEvent, Boolean> notifiedMap;
-
-
-//    private ArrayList<Geofence> mGeofenceList;
-//    private PendingIntent mGeofencePendingIntent;
-//    private GeofencingClient mGeofencingClient;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +80,8 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
-        eventsList = new ArrayList<>();
-        notifiedMap = new HashMap<>();
+//        eventsList = new ArrayList<>();
+//        notifiedMap = new HashMap<>();
 
         start = getIntent().getBooleanExtra("Start night", false);
 
@@ -182,22 +171,23 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
             }
         });
 
-        databaseEvents = Utils.getDatabase().getReference("events");
-
-        databaseEvents.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for(DataSnapshot eventSnapshot:dataSnapshot.getChildren()) {
-                    OrganizedEvent event = eventSnapshot.getValue(OrganizedEvent.class);
-                    eventsList.add(event);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+//        databaseEvents = Utils.getDatabase().getReference("events");
+//
+//        databaseEvents.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                for(DataSnapshot eventSnapshot:dataSnapshot.getChildren()) {
+//                    OrganizedEvent event = eventSnapshot.getValue(OrganizedEvent.class);
+//                    eventsList.add(event);
+//                    notifiedMap.put(event, false);
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
         mHistoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -300,7 +290,6 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-
 
     }
 
