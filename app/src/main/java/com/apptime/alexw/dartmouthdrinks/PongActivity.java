@@ -97,7 +97,7 @@ public class PongActivity extends AppCompatActivity {
                 //todo: actually make this do something
                 Toast.makeText(mContext, "Third Shrub Added", Toast.LENGTH_SHORT).show();
                 intent.putExtra("name","One Third of a Shrub");
-                intent.putExtra("amount", 12);
+                intent.putExtra("amount", 12.0);
                 startActivityForResult(intent, Constants.TIME_REQUEST_CODE);
             }
         });

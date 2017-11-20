@@ -146,7 +146,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, TimeDrinkActivity.class);
                 intent.putExtra("name", "Glass of wine");
-                intent.putExtra("amount", 5);
+                intent.putExtra("amount", 5.0);
                 intent.putExtra("percent", .12);
                 startActivityForResult(intent, Constants.TIME_REQUEST_CODE);
             }
@@ -207,6 +207,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
 
             newDrink.setPostBac(bac);
             currentTimeUser.setBac(bac);
+            Log.d("LOG", "onActivityResult: " + bac);
             currentTimeUser.setTimeOfLastCalc(currentTime);
 
             ArrayList<OnNight> history = currentTimeUser.getHistory();
