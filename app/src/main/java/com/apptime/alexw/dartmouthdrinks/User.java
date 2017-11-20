@@ -61,6 +61,10 @@ public class User {
         return timeOfLastCalc;
     }
 
+    public List<OnNight> getHistory() {
+        return history;
+    }
+
     public void setUserId(String userId) {
         this.userId = userId;
     }
@@ -83,5 +87,9 @@ public class User {
 
     public void setTimeOfLastCalc(Date timeOfLastCalc) {
         this.timeOfLastCalc = timeOfLastCalc;
+    }
+
+    public void setHistory(List<OnNight> history) {
+        this.history = history;
     }
 }

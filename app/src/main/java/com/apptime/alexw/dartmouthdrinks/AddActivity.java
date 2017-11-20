@@ -22,8 +22,11 @@ import android.widget.Toast;
 
 import java.text.Normalizer;
 import java.util.Date;
+import java.util.List;
 
 public class AddActivity extends AppCompatActivity {
+
+    boolean start;
 
     Button mResourceButton;
     Button mHistoryButton;
@@ -64,7 +67,7 @@ public class AddActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
-
+        start = getIntent().getBooleanExtra("start night", false);
 
         mResourceButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,7 +195,24 @@ public class AddActivity extends AppCompatActivity {
 
             currentTimeUser.setBac(bac);
             currentTimeUser.setTimeOfLastCalc(currentTime);
+
+            List<OnNight> history = currentTimeUser.getHistory();
+            OnNight currentNight;
+
+            if (start) {
+                currentNight = new OnNight(currentTime);
+                start = false;
+            }
+            else {
+                currentNight = history.remove(history.size()-1);
+            }
+
+            currentNight.addDrink(newDrink);
+            history.add(currentNight);
+            currentTimeUser.setHistory(history);
+
             mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+
         }
     }
 

@@ -1,7 +1,7 @@
 package com.apptime.alexw.dartmouthdrinks;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,15 +11,19 @@ import java.util.List;
 public class OnNight {
 
     private List<Drink> drinkList;
-    private Calendar day;
+    private Date day;
 
-    public OnNight(Calendar day) {
+    public OnNight(Date day) {
         this.day = day;
         drinkList = new ArrayList<>();
     }
 
     public void addDrink(Drink d) {
         drinkList.add(d);
+    }
+
+    public Date getDay() {
+        return day;
     }
 
 }

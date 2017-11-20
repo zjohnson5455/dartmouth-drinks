@@ -40,6 +40,7 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, AddActivity.class);
+                intent.putExtra("Start night", true);
                 startActivity(intent);
             }
         });
