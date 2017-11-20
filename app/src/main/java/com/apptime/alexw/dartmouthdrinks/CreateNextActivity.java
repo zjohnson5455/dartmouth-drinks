@@ -65,8 +65,8 @@ public class CreateNextActivity extends AppCompatActivity {
 
             User user = new User(UID, name, weight, maleBool);
             mDatabase.child("users").child(currentUser.getUid()).setValue(user);
-            Intent add = new Intent(getApplicationContext(), AddActivity.class);
-            startActivity(add);
+            Intent welcome = new Intent(getApplicationContext(), WelcomeActivity.class);
+            startActivity(welcome);
             finish();
         }
         else if (mNameEditText.getText().toString().length() == 0){

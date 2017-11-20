@@ -45,7 +45,7 @@ public class CreateAcctActivity extends AppCompatActivity {
         mConfirmPasswordEditText = findViewById(R.id.reconfirm_password);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null){
-            Intent add = new Intent(getApplicationContext(), AddActivity.class);
+            Intent add = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(add);
             finish();
         }
