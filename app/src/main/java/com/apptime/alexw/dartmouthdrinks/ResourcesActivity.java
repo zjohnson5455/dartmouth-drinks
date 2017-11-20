@@ -21,10 +21,7 @@ public class ResourcesActivity extends AppCompatActivity {
     }
     //to test the service
     public void onRightsClick(View v) {
-        Intent service = new Intent();
-        Log.d("SERVVY", "Reached OnCLick");
-        service.setClass(getApplicationContext(), ForegroundService.class);
-        startService(service);
+
     }
 
     public void onEmergencyClicked(View v) {

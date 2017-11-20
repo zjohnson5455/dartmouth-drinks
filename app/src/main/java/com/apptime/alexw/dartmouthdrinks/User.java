@@ -3,6 +3,7 @@ package com.apptime.alexw.dartmouthdrinks;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by briantomasco on 11/18/17.
@@ -17,12 +18,14 @@ public class User {
     private double bac;
     private Date timeOfLastCalc;
     private ArrayList<OnNight> history;
+   // private String number;
 
-    public User (String userId, String name, int weight, boolean male, ArrayList<OnNight> list){
+    public User (String userId, String name, int weight, boolean male, ArrayList<OnNight> list) {
         this.userId = userId;
         this.name = name;
         this.weight = weight;
         this.male = male;
+        //this.number = number;
         timeOfLastCalc = new Date();
 
         bac = 0.0;
@@ -32,6 +35,10 @@ public class User {
     public User(){
 
     }
+
+    //public String getNumber() {
+     //   return number;
+    //}
 
     public void addOnNight(OnNight night) {
         history.add(night);

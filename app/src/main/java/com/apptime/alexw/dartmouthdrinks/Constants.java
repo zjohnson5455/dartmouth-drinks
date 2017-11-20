@@ -18,5 +18,7 @@ public class Constants {
     static final int GEOFENCE_INTENT_REQUEST_CODE = 3;
 
     static final int PERMISSIONS_REQUEST_FINE_LOCATION = 111;
+    static final int TEST_REQUEST_CODE = 7;
+    static final int REMOVE_FRIEND_REQUEST_CODE = 8;
 
 }

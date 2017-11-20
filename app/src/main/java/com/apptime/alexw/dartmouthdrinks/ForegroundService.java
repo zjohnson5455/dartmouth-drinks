@@ -46,6 +46,7 @@ public class ForegroundService extends Service implements LocationListener {
     User currentTimeUser;
     Context context;
     Notification notification;
+    boolean notified = false;
     List<OrganizedEvent> eventsList;
 
     // constant
@@ -181,6 +182,39 @@ public class ForegroundService extends Service implements LocationListener {
             BAC = user.getBac();
 
         }
+
+        bacNotify();
+    }
+
+    public void bacNotify() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(ForegroundService.NOTIFICATION_SERVICE);
+
+        Intent mainIntent = new Intent(this, AddActivity.class);
+        PendingIntent mainPendingIntent = PendingIntent.getActivity(this, Constants.ADD_DRINK_REQUEST_CODE, mainIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+
+        //if you're within the listed distance and you haven't recently sent a notification
+        if (BAC > 0.2 && notified == false) {
+            Notification.Builder builder1 = new Notification.Builder(this)
+                    .setContentTitle("You're over the limit!")
+                    .setContentText("Your BAC is at " + BAC)
+                    .setSmallIcon(R.drawable.cup)
+                    .setContentIntent(mainPendingIntent)
+                    .setOngoing(false);
+            Notification noti = builder1.build();
+
+            //if the settings dictate it, send a vibration and a sound with the notification
+            noti.defaults |= Notification.DEFAULT_VIBRATE;
+            noti.defaults |= Notification.DEFAULT_SOUND;
+            notificationManager.notify(3, noti);
+            notified = true;
+        }
+
+        else if (BAC < 0.2 && notified == true) {
+            notified = false;
+            notificationManager.cancel(3);
+        }
+
     }
 
     class TimeDisplayTimerTask extends TimerTask {

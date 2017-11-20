@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -50,6 +51,10 @@ public class WelcomeActivity extends AppCompatActivity {
                     Intent intent = new Intent(mContext, AddActivity.class);
                     intent.putExtra("Start night", true);
                     startActivity(intent);
+                    Intent service = new Intent();
+                    Log.d("SERVVY", "Reached OnCLick");
+                    service.setClass(getApplicationContext(), ForegroundService.class);
+                    startService(service);
                     finish();
                 }
                 else {
