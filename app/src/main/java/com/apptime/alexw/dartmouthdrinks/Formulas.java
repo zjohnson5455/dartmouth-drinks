@@ -9,7 +9,6 @@ import android.util.Log;
 public class Formulas {
 
     public static double calculateBac (User user, Drink drink, double timeSinceCalc, double timeSinceDrink) {
-        Log.d("TIME DIFF", String.valueOf(timeSinceCalc - timeSinceDrink));
         double changeInBac;
 
         if (user.isMale()) changeInBac = (drink.getAlcohol() * Constants.WIDMARK_CONSTANT)/(user.getWeight() * Constants.MALE_BAC_CONSTANT);

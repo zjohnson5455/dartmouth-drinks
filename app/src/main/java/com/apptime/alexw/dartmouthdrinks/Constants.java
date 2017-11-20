@@ -16,4 +16,6 @@ public class Constants {
     static final int ADD_DRINK_REQUEST_CODE = 1;
     static final int TIME_REQUEST_CODE = 2;
 
+    static final int PERMISSIONS_REQUEST_FINE_LOCATION = 111;
+
 }

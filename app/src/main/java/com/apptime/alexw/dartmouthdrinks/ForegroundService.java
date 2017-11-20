@@ -168,10 +168,6 @@ public class ForegroundService extends Service {
             BAC = currentTimeUser.getBac();
             Date date = new Date();
             double timeDiff = Formulas.milliToMinutes(date.getTime() - currentTimeUser.getTimeOfLastCalc().getTime());
-            Log.d("SERV BAC", "BACUpdate last: " + currentTimeUser.getTimeOfLastCalc().getTime());
-            Log.d("SERV BAC", "BACUpdate curr: " + date.getTime());
-            Log.d("SERV BAC", "BACUpdate diff: " + (date.getTime() - currentTimeUser.getTimeOfLastCalc().getTime()));
-            Log.d("SERV BAC", "BACUpdate diff min: " + timeDiff);
             double newBAC = Formulas.bacMetabolism(BAC, timeDiff);
             User user = currentTimeUser;
             user.setBac(newBAC);
