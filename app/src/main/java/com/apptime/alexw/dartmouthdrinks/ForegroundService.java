@@ -8,6 +8,9 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.location.LocationListener;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
@@ -23,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -32,7 +36,7 @@ import static com.apptime.alexw.dartmouthdrinks.SignInActivity.TAG;
  * Created by zacharyjohnson on 11/19/17.
  */
 
-public class ForegroundService extends Service {
+public class ForegroundService extends Service implements LocationListener {
 
     double BAC;
     DatabaseReference mDatabase;
@@ -42,6 +46,7 @@ public class ForegroundService extends Service {
     User currentTimeUser;
     Context context;
     Notification notification;
+    List<OrganizedEvent> eventsList;
 
     // constant
     public static final long NOTIFY_INTERVAL = 2000; // 1 second
@@ -197,4 +202,15 @@ public class ForegroundService extends Service {
 
     }
 
+    @Override
+    public void onLocationChanged(Location location) {}
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+    @Override
+    public void onProviderEnabled(String provider) {}
+
+    @Override
+    public void onProviderDisabled(String provider) {}
 }

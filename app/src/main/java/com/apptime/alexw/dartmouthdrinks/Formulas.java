@@ -26,7 +26,9 @@ public class Formulas {
     }
 
     public static double bacMetabolism(double prevBac, double timeDiff) {
-        return prevBac - (minToHours(timeDiff) * Constants.ALCOHOL_METABOLISM_RATE);
+        double newBac = prevBac - (minToHours(timeDiff) * Constants.ALCOHOL_METABOLISM_RATE);
+        if (newBac <= 0) return 0.0;
+        else return newBac;
     }
 
     public static double drinkAlcoholContent(double amount, double percent){

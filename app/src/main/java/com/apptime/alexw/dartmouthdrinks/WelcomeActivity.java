@@ -50,6 +50,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     Intent intent = new Intent(mContext, AddActivity.class);
                     intent.putExtra("Start night", true);
                     startActivity(intent);
+                    finish();
                 }
                 else {
                     Toast.makeText(getApplicationContext(), "Location permission needed to proceed", Toast.LENGTH_SHORT).show();

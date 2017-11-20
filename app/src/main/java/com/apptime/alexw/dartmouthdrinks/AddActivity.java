@@ -5,6 +5,8 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -17,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,13 +29,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import com.google.android.gms.location.Geofence;
-import com.google.android.gms.location.GeofencingClient;
-import com.google.android.gms.location.GeofencingRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+//import com.google.android.gms.location.Geofence;
+//import com.google.android.gms.location.GeofencingClient;
+//import com.google.android.gms.location.GeofencingRequest;
+//import com.google.android.gms.location.LocationServices;
+//import com.google.android.gms.maps.model.LatLng;
+//import com.google.android.gms.tasks.OnCompleteListener;
+//import com.google.android.gms.tasks.Task;
 
 import android.widget.Toast;
 
@@ -41,7 +44,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class AddActivity extends AppCompatActivity {
+public class AddActivity extends AppCompatActivity implements LocationListener {
 
     boolean start;
 
@@ -62,9 +65,9 @@ public class AddActivity extends AppCompatActivity {
     DatabaseReference databaseUser;
     User currentTimeUser;
 
-    private ArrayList<Geofence> mGeofenceList;
-    private PendingIntent mGeofencePendingIntent;
-    private GeofencingClient mGeofencingClient;
+//    private ArrayList<Geofence> mGeofenceList;
+//    private PendingIntent mGeofencePendingIntent;
+//    private GeofencingClient mGeofencingClient;
 
 
 
@@ -89,12 +92,12 @@ public class AddActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
-        mGeofenceList = new ArrayList<>();
-        mGeofencePendingIntent = null;
-        mGeofencingClient = LocationServices.getGeofencingClient(this);
-        populateGeofenceList();
-
-        addGeofences();
+//        mGeofenceList = new ArrayList<>();
+//        mGeofencePendingIntent = null;
+//        mGeofencingClient = LocationServices.getGeofencingClient(this);
+//        populateGeofenceList();
+//
+//        addGeofences();
 
         start = getIntent().getBooleanExtra("Start night", false);
 
@@ -251,70 +254,83 @@ public class AddActivity extends AppCompatActivity {
         }
     }
 
-    private GeofencingRequest getGeofencingRequest() {
-        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+//    private GeofencingRequest getGeofencingRequest() {
+//        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
+//
+//        // The INITIAL_TRIGGER_ENTER flag indicates that geofencing service should trigger a
+//        // GEOFENCE_TRANSITION_ENTER notification when the geofence is added and if the device
+//        // is already inside that geofence.
+//        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_DWELL);
+//
+//        // Add the geofences to be monitored by geofencing service.
+//        builder.addGeofences(mGeofenceList);
+//
+//        // Return a GeofencingRequest.
+//        return builder.build();
+//    }
 
-        // The INITIAL_TRIGGER_ENTER flag indicates that geofencing service should trigger a
-        // GEOFENCE_TRANSITION_ENTER notification when the geofence is added and if the device
-        // is already inside that geofence.
-        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER);
+//    private PendingIntent getGeofencePendingIntent() {
+//        // Reuse the PendingIntent if we already have it.
+//        if (mGeofencePendingIntent != null) {
+//            return mGeofencePendingIntent;
+//        }
+//        Intent intent = new Intent(this, GeofenceTransitionService.class);
+//        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
+//        // addGeofences() and removeGeofences().
+//        return PendingIntent.getService(this, Constants.GEOFENCE_INTENT_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//    }
 
-        // Add the geofences to be monitored by geofencing service.
-        builder.addGeofences(mGeofenceList);
+//    @SuppressWarnings("MissingPermission")
+//    private void addGeofences() {
+//        if (!checkPermissions()) {
+//            Toast.makeText(getApplicationContext(), "Location permissions needed to proceed", Toast.LENGTH_SHORT).show();
+//            requestPermissions();
+//            return;
+//        }
+//        mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
+//                .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void aVoid) {
+//                        Log.d("FENCE", "added fences");
+//                    }
+//                })
+//                .addOnFailureListener(this, new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        Log.d("FENCE", "failed to add fences");
+//                        Log.e("FENCE ADD ERROR", e.getMessage());
+//                    }
+//                });
+//    }
 
-        // Return a GeofencingRequest.
-        return builder.build();
-    }
-
-    private PendingIntent getGeofencePendingIntent() {
-        // Reuse the PendingIntent if we already have it.
-        if (mGeofencePendingIntent != null) {
-            return mGeofencePendingIntent;
-        }
-        Intent intent = new Intent(this, GeofenceTransitionService.class);
-        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
-        // addGeofences() and removeGeofences().
-        return PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-    }
-
-    @SuppressWarnings("MissingPermission")
-    private void addGeofences() {
-        if (!checkPermissions()) {
-            Toast.makeText(getApplicationContext(), "Location permissions needed to proceed", Toast.LENGTH_SHORT).show();
-            requestPermissions();
-            return;
-        }
-        mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent());
-    }
-
-    private void populateGeofenceList() {
-
-        mGeofenceList.add((new Geofence.Builder()
-                // Set the request ID of the geofence. This is a string to identify this
-                // geofence.
-                .setRequestId("Cube")
-
-                // Set the circular region of this geofence.
-                .setCircularRegion(
-                        43.7044773 ,
-                        -72.29093970000001 ,
-                        100
-                )
-
-                // Set the expiration duration of the geofence. This geofence gets automatically
-                // removed after this period of time.
-                .setExpirationDuration(100000000)
-
-                // Set the transition types of interest. Alerts are only generated for these
-                // transition. We track entry, dwell, and exit transitions in this sample.
-                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-                        Geofence.GEOFENCE_TRANSITION_EXIT |
-                        Geofence.GEOFENCE_TRANSITION_DWELL))
-                .setLoiteringDelay(60000)
-
-                // Create the geofence.
-                .build());
-    }
+//    private void populateGeofenceList() {
+//
+//        mGeofenceList.add((new Geofence.Builder()
+//                // Set the request ID of the geofence. This is a string to identify this
+//                // geofence.
+//                .setRequestId("Cube")
+//
+//                // Set the circular region of this geofence.
+//                .setCircularRegion(
+//                        43.7044773 ,
+//                        -72.29093970000001 ,
+//                        100
+//                )
+//
+//                // Set the expiration duration of the geofence. This geofence gets automatically
+//                // removed after this period of time.
+//                .setExpirationDuration(100000000)
+//
+//                // Set the transition types of interest. Alerts are only generated for these
+//                // transition. We track entry, dwell, and exit transitions in this sample.
+//                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
+//                        Geofence.GEOFENCE_TRANSITION_EXIT |
+//                        Geofence.GEOFENCE_TRANSITION_DWELL))
+//                .setLoiteringDelay(6000)
+//
+//                // Create the geofence.
+//                .build());
+//    }
 
     public void onBACClick(View v) {
         Intent info = new Intent("INFO");
@@ -351,12 +367,17 @@ public class AddActivity extends AppCompatActivity {
     public void onDestroy(){
         super.onDestroy();
         Log.d("CYCLE", "onDestroy");
-        mGeofencingClient.removeGeofences(getGeofencePendingIntent())
-        .addOnSuccessListener(this, new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d("FENCE", "destroyed fences");
-            }
-        });
     }
+
+    @Override
+    public void onLocationChanged(Location location) {}
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+    @Override
+    public void onProviderEnabled(String provider) {}
+
+    @Override
+    public void onProviderDisabled(String provider) {}
 }
