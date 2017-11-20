@@ -4,8 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,6 +36,15 @@ public class SettingsActivity extends AppCompatActivity {
     TextView mWeightTextView;
     TextView mSexTextView;
 
+    Switch me;
+    Switch friends;
+    Switch organizer;
+
+    Settings settings;
+
+    EditText bacET;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +58,14 @@ public class SettingsActivity extends AppCompatActivity {
         mWeightTextView = findViewById(R.id.weightTextView);
         mSexTextView = findViewById(R.id.sexTextView);
 
+        me = findViewById(R.id.meSwitch);
+        friends = findViewById(R.id.friendsSwitch);
+        organizer = findViewById(R.id.organizerSwitch);
+        bacET = findViewById(R.id.bacEditText);
+
+
+
+
 
 
         mDatabase = Utils.getDatabase().getReference();
@@ -56,11 +78,52 @@ public class SettingsActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 currentTimeUser = dataSnapshot.getValue(User.class);
+
+                settings = currentTimeUser.getSettings();
+                if (settings != null) {
+                    me.setChecked(settings.getMe());
+                    friends.setChecked(settings.getFriends());
+                    organizer.setChecked(settings.getOrganizer());
+                    bacET.setText(String.valueOf(settings.getThreshhold()));
+                }
+
                 mNameTextView.setText(currentTimeUser.getName().toString());
                 mEmailTextView.setText(currentUser.getEmail().toString());
                 mWeightTextView.setText(String.valueOf(currentTimeUser.getWeight()) + " lbs");
                 if (currentTimeUser.isMale()) mSexTextView.setText("Male");
                 else mSexTextView.setText("Female");
+
+                me.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        Settings newSettings = currentTimeUser.getSettings();
+                        newSettings.setMe(b);
+                        currentTimeUser.setSettings(newSettings);
+                        mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                    }
+                });
+
+                friends.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        Settings newSettings = currentTimeUser.getSettings();
+                        newSettings.setFriends(b);
+                        currentTimeUser.setSettings(newSettings);
+                        mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                    }
+                });
+
+                organizer.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                        Settings newSettings = currentTimeUser.getSettings();
+                        newSettings.setOrganizer(b);
+                        currentTimeUser.setSettings(newSettings);
+                        mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                    }
+                });
+
+
 
             }
 
@@ -71,6 +134,27 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
+        bacET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                Settings newSettings = currentTimeUser.getSettings();
+                if (bacET.getText().toString().length() != 0){
+                    newSettings.setThreshhold(Double.valueOf(bacET.getText().toString()));
+                    currentTimeUser.setSettings(newSettings);
+                    mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                }
+            }
+        });
 
 
         mSignOutButton = findViewById(R.id.sign_out_button);

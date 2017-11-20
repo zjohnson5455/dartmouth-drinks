@@ -155,13 +155,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Notify me"
-                android:textSize="24dp" />
+                android:textSize="24dp"
+                android:id="@+id/textView2" />
 
             <Switch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:checked="true"
                 android:layout_alignParentRight="true"
-                android:checked="true" />
+                android:id="@+id/meSwitch"/>
 
         </RelativeLayout>
 
@@ -179,7 +181,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:checked="true" />
+                android:checked="true"
+                android:id="@+id/friendsSwitch"/>
 
         </RelativeLayout>
 
@@ -198,6 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:checked="true"
+                android:id="@+id/organizerSwitch"
                 />
 
         </RelativeLayout>

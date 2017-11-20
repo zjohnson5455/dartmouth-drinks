@@ -33,7 +33,7 @@ public class OrganizedEvent {
         endTime = null;
     }
 
-    public OrganizedEvent() {
+    public OrganizedEvent(){
 
     }
 
