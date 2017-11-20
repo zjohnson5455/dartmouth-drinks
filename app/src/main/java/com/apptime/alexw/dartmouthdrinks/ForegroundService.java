@@ -1,13 +1,31 @@
 package com.apptime.alexw.dartmouthdrinks;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static com.apptime.alexw.dartmouthdrinks.SignInActivity.TAG;
 
 /**
  * Created by zacharyjohnson on 11/19/17.
@@ -16,10 +34,45 @@ import android.util.Log;
 public class ForegroundService extends Service {
 
     double BAC;
+    DatabaseReference mDatabase;
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+    DatabaseReference databaseUser;
+    User currentTimeUser;
+    Context context;
+
+    // constant
+    public static final long NOTIFY_INTERVAL = 2000; // 1 second
+
+    // run on another Thread to avoid crash
+    private Handler mHandler = new Handler();
+    // timer handling
+    private Timer mTimer = null;
+
 
     @Override
     public void onCreate() {
         super.onCreate();
+        context = this;
+        mDatabase = Utils.getDatabase().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+        databaseUser = Utils.getDatabase().getReference("users").child(currentUser.getUid());
+
+        databaseUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                currentTimeUser = dataSnapshot.getValue(User.class);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
         Log.d("SERVVY", "Received Start Foreground Intent");
     }
 
@@ -28,9 +81,28 @@ public class ForegroundService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
         Log.d("SERVVY", "Received Start Foreground Intent");
+
+        // cancel if already existed
+        if(mTimer != null) {
+            mTimer.cancel();
+        } else {
+            // recreate new
+            mTimer = new Timer();
+        }
+        // schedule task
+        mTimer.scheduleAtFixedRate(new TimeDisplayTimerTask(), 0, NOTIFY_INTERVAL);
+
         showNotification();
         return super.onStartCommand(intent, flags, startId);
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mTimer.cancel();
+    }
+
+
 
 
     private void showNotification(){
@@ -38,7 +110,7 @@ public class ForegroundService extends Service {
         Log.d("SERVVY", "Tried to show notification");
 
         Intent mainIntent = new Intent(this, AddActivity.class);
-        //this intent sends you back to the main game screen
+
         PendingIntent mainPendingIntent = PendingIntent.getActivity(this, Constants.ADD_DRINK_REQUEST_CODE, mainIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
 
@@ -58,4 +130,40 @@ public class ForegroundService extends Service {
         return null;
 
     }
+
+    public void BACUpdate(){
+        if (currentTimeUser != null) {
+            BAC = currentTimeUser.getBac();
+            Date date = new Date();
+            double timeDiff = Formulas.milliToMinutes(date.getTime() - currentTimeUser.getTimeOfLastCalc().getTime());
+            Log.d("SERV BAC", "BACUpdate last: " + currentTimeUser.getTimeOfLastCalc().getTime());
+            Log.d("SERV BAC", "BACUpdate curr: " + date.getTime());
+            Log.d("SERV BAC", "BACUpdate diff: " + (date.getTime() - currentTimeUser.getTimeOfLastCalc().getTime()));
+            Log.d("SERV BAC", "BACUpdate diff min: " + timeDiff);
+            double newBAC = Formulas.bacMetabolism(BAC, timeDiff);
+            User user = currentTimeUser;
+            user.setBac(newBAC);
+            user.setTimeOfLastCalc(date);
+            mDatabase.child("users").child(currentUser.getUid()).setValue(user);
+        }
+    }
+
+    class TimeDisplayTimerTask extends TimerTask {
+
+        @Override
+        public void run() {
+            // run on another thread
+            mHandler.post(new Runnable() {
+
+                @Override
+                public void run() {
+                    // display toast
+                    BACUpdate();
+                }
+
+            });
+        }
+
+    }
+
 }

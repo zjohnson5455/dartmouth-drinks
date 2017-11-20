@@ -24,4 +24,11 @@ public class ResourcesActivity extends AppCompatActivity {
         service.setClass(getApplicationContext(), ForegroundService.class);
         startService(service);
     }
+
+    public void onEmergencyClicked(View v) {
+        Intent service = new Intent();
+        Log.d("SERVVY", "Reached OnCLick");
+        service.setClass(getApplicationContext(), ForegroundService.class);
+        stopService(service);
+    }
 }

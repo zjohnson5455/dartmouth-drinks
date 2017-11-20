@@ -39,6 +39,6 @@ public class Formulas {
     }
 
     public static double milliToMinutes (long milliseconds) {
-        return (double)(milliseconds / Constants.MILLISECONDS_PER_MINUTE);
+        return ((double)milliseconds / (double)Constants.MILLISECONDS_PER_MINUTE);
     }
 }
