@@ -16,7 +16,7 @@ public class User {
     private int weight;
     private boolean male;
     private double bac;
-    private long timeOfLastCalc;
+    private Date timeOfLastCalc;
     private ArrayList<OnNight> history;
    // private String number;
     private Settings settings;
@@ -28,7 +28,7 @@ public class User {
         this.weight = weight;
         this.male = male;
         //this.number = number;
-        timeOfLastCalc = new Date().getTime();
+        timeOfLastCalc = new Date();
         settings = new Settings();
         friendNumber = null;
         bac = 0.0;
@@ -68,7 +68,7 @@ public class User {
     }
 
     public Date getTimeOfLastCalc() {
-        return new Date(timeOfLastCalc);
+        return timeOfLastCalc;
     }
 
     public ArrayList<OnNight> getHistory() {
@@ -96,7 +96,7 @@ public class User {
     }
 
     public void setTimeOfLastCalc(Date timeOfLastCalc) {
-        this.timeOfLastCalc = timeOfLastCalc.getTime();
+        this.timeOfLastCalc = timeOfLastCalc;
     }
 
     public void setHistory(ArrayList<OnNight> history) {

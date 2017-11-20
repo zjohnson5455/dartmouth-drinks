@@ -1,5 +1,7 @@
 package com.apptime.alexw.dartmouthdrinks;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.Date;
 
 /**
@@ -9,7 +11,7 @@ import java.util.Date;
 public class Drink {
 
     private String name;
-    private long time;
+    private Date time;
     private double prevBac;
     private double amount;
     private double percent;
@@ -18,7 +20,7 @@ public class Drink {
 
     public Drink (String name, Date time, double bac, double amount, double percent){
         this.name = name;
-        this.time = time.getTime();
+        this.time = time;
         this.prevBac = bac;
         this.amount = amount;
         this.percent = percent;
@@ -35,7 +37,7 @@ public class Drink {
     }
 
     public Date getTime() {
-        return new Date(time);
+        return time;
     }
 
     public double getPrevBac() {
