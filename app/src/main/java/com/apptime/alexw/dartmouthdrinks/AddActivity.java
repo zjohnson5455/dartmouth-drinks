@@ -34,7 +34,9 @@ import android.widget.Toast;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AddActivity extends AppCompatActivity implements LocationListener {
 
@@ -55,8 +57,12 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     DatabaseReference databaseUser;
-//    DatabaseReference datab
+    DatabaseReference databaseEvents;
     User currentTimeUser;
+
+    List<OrganizedEvent> eventsList;
+    Map<OrganizedEvent, Boolean> notifiedMap;
+
 
 //    private ArrayList<Geofence> mGeofenceList;
 //    private PendingIntent mGeofencePendingIntent;
@@ -84,6 +90,9 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
         mDatabase = Utils.getDatabase().getReference();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+
+        eventsList = new ArrayList<>();
+        notifiedMap = new HashMap<>();
 
         start = getIntent().getBooleanExtra("Start night", false);
 
@@ -169,6 +178,23 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+        databaseEvents = Utils.getDatabase().getReference("events");
+
+        databaseEvents.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot eventSnapshot:dataSnapshot.getChildren()) {
+                    OrganizedEvent event = eventSnapshot.getValue(OrganizedEvent.class);
+                    eventsList.add(event);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
