@@ -49,6 +49,10 @@ public class SettingsActivity extends AppCompatActivity {
     Settings settings;
 
     EditText bacET;
+    EditText phoneEditText;
+
+    Button bacButton;
+    Button phoneButton;
 
 
     @Override
@@ -68,6 +72,11 @@ public class SettingsActivity extends AppCompatActivity {
         friends = findViewById(R.id.friendsSwitch);
         organizer = findViewById(R.id.organizerSwitch);
         bacET = findViewById(R.id.bacEditText);
+        phoneEditText = findViewById(R.id.numberEditText);
+
+        bacButton = findViewById(R.id.bacButton);
+        phoneButton = findViewById(R.id.numberButton);
+
 
 
 
@@ -93,6 +102,7 @@ public class SettingsActivity extends AppCompatActivity {
                     bacET.setText(String.valueOf(settings.getThreshhold()));
                 }
 
+                phoneEditText.setText(currentTimeUser.getFriendNumber().toString());
                 mNameTextView.setText(currentTimeUser.getName().toString());
                 mEmailTextView.setText(currentUser.getEmail().toString());
                 mWeightTextView.setText(String.valueOf(currentTimeUser.getWeight()) + " lbs");
@@ -134,6 +144,30 @@ public class SettingsActivity extends AppCompatActivity {
                             Settings newSettings = currentTimeUser.getSettings();
                             newSettings.setFriends(b);
                             currentTimeUser.setSettings(newSettings);
+                            mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                        }
+                    }
+                });
+
+                bacButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        double bac = Double.valueOf(bacET.getText().toString());
+                        if (currentTimeUser != null){
+                            settings = currentTimeUser.getSettings();
+                            settings.setThreshhold(bac);
+                            currentTimeUser.setSettings(settings);
+                            mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                        }
+                    }
+                });
+
+                phoneButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String number = phoneEditText.getText().toString();
+                        if (currentTimeUser != null){
+                            currentTimeUser.setFriendNumber(number);
                             mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
                         }
                     }
@@ -189,30 +223,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-
-        bacET.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                    if (currentTimeUser != null) {
-                        Settings newSettings = currentTimeUser.getSettings();
-                        if (bacET.getText().toString().length() != 0) {
-                            newSettings.setThreshhold(Double.valueOf(bacET.getText().toString()));
-                            currentTimeUser.setSettings(newSettings);
-                            mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
-                        }
-                    }
-            }
-        });
 
 
         mSignOutButton = findViewById(R.id.sign_out_button);
