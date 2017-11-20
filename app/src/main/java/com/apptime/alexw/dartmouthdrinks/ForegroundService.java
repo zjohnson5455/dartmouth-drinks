@@ -2,6 +2,7 @@ package com.apptime.alexw.dartmouthdrinks;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -40,9 +41,11 @@ public class ForegroundService extends Service {
     DatabaseReference databaseUser;
     User currentTimeUser;
     Context context;
+    Notification notification;
 
     // constant
     public static final long NOTIFY_INTERVAL = 2000; // 1 second
+    private static final int NOTIF_ID=1;
 
     // run on another Thread to avoid crash
     private Handler mHandler = new Handler();
@@ -120,7 +123,7 @@ public class ForegroundService extends Service {
                 .setSmallIcon(R.drawable.cup)
                 .setContentIntent(mainPendingIntent)
                 .setOngoing(true);
-        Notification notification = builder.build();
+        notification = builder.build();
         startForeground(1, notification);
     }
 
@@ -129,6 +132,35 @@ public class ForegroundService extends Service {
     public IBinder onBind(Intent intent) {
         return null;
 
+    }
+
+    private Notification getMyActivityNotification(String text){
+        // The PendingIntent to launch our activity if the user selects
+        // this notification
+        CharSequence title = "You're having a night out!";
+        PendingIntent contentIntent = PendingIntent.getActivity(this,
+                0, new Intent(this, AddActivity.class), 0);
+
+        Notification.Builder builder = new Notification.Builder(this)
+                .setContentTitle(title)
+                .setContentText(text)
+                .setSmallIcon(R.drawable.cup)
+                .setContentIntent(contentIntent)
+                .setOngoing(true);
+        notification = builder.build();
+        return notification;
+    }
+
+    /**
+     * This is the method that can be called to update the Notification
+     */
+    private void updateNotification() {
+        String text = "Your BAC is " + BAC;
+
+        Notification notification = getMyActivityNotification(text);
+
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mNotificationManager.notify(NOTIF_ID, notification);
     }
 
     public void BACUpdate(){
@@ -145,6 +177,8 @@ public class ForegroundService extends Service {
             user.setBac(newBAC);
             user.setTimeOfLastCalc(date);
             mDatabase.child("users").child(currentUser.getUid()).setValue(user);
+            BAC = user.getBac();
+
         }
     }
 
@@ -159,6 +193,7 @@ public class ForegroundService extends Service {
                 public void run() {
                     // display toast
                     BACUpdate();
+                    updateNotification();
                 }
 
             });

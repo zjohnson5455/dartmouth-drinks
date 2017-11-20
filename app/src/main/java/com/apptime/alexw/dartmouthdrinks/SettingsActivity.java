@@ -85,4 +85,10 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void onExplainClick(View v) {
+        Intent explain = new Intent();
+        explain.setClass(getApplicationContext(), ExplainActivity.class);
+        startActivity(explain);
+    }
 }

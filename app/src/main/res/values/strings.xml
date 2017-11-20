@@ -20,4 +20,9 @@
     <string name="a0.4">Onset of coma, and possible death due to respiratory arrest.</string>
     <string name="Time">What time did you have your drink?</string>
     <string name="Welcome">Dartmouth Drinks is a mobile application designed to promote responsible drinking behavior. Best results are achieved upon total accuracy; lying about your drinking habits only hurts yourself and others. Please note: our BAC calculator is only an estimate. Do not use it to determine if you can drive or operate heavy machinery. Have fun and be safe!</string>
+    <string name="Explain">Here is a brief explanation of what each of our settings mean!</string>
+    <string name="Threshold">This is the BAC threshold at which an action would occur. That action is determined by the following settings</string>
+    <string name="Me">This will notify you if your BAC passes the threshold.</string>
+    <string name="Friend">This will send a text to a friend (selected by you) if your BAC passes the threshold (set by you). </string>
+    <string name="Organizer">This will send a text to the party organizers if your BAC passes the threshold (set by the organizers). </string>
 </resources>

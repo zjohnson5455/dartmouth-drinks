@@ -34,10 +34,4 @@ public class ResourcesActivity extends AppCompatActivity {
         stopService(service);
     }
 
-    //to test the geofence
-    public void onResourcesClick(View v) {
-        Intent test = new Intent();
-        test.setClass(getApplicationContext(), GeoFencey.class);
-        startActivity(test);
-    }
 }

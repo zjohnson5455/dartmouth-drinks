@@ -49,7 +49,6 @@
         <activity android:name=".TimeDrinkActivity"/>
         <service android:name=".ForegroundService"/>
         <activity android:name=".WelcomeActivity"/>
-        <activity android:name=".GeoFencey"/>
-        <service android:name=".GeofenceTransitionService"/>
+        <activity android:name=".ExplainActivity"/>
     </application>
 </manifest>
