@@ -147,12 +147,14 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                Settings newSettings = currentTimeUser.getSettings();
-                if (bacET.getText().toString().length() != 0){
-                    newSettings.setThreshhold(Double.valueOf(bacET.getText().toString()));
-                    currentTimeUser.setSettings(newSettings);
-                    mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
-                }
+                    if (currentTimeUser != null) {
+                        Settings newSettings = currentTimeUser.getSettings();
+                        if (bacET.getText().toString().length() != 0) {
+                            newSettings.setThreshhold(Double.valueOf(bacET.getText().toString()));
+                            currentTimeUser.setSettings(newSettings);
+                            mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
+                        }
+                    }
             }
         });
 

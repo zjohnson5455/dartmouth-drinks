@@ -20,6 +20,7 @@ public class User {
     private ArrayList<OnNight> history;
    // private String number;
     private Settings settings;
+    private String friendNumber;
 
     public User (String userId, String name, int weight, boolean male, ArrayList<OnNight> list) {
         this.userId = userId;
@@ -29,7 +30,7 @@ public class User {
         //this.number = number;
         timeOfLastCalc = new Date();
         settings = new Settings();
-
+        friendNumber = null;
         bac = 0.0;
         history = list;
     }
@@ -108,5 +109,13 @@ public class User {
 
     public void setSettings(Settings settings) {
         this.settings = settings;
+    }
+
+    public String getFriendNumber() {
+        return friendNumber;
+    }
+
+    public void setFriendNumber(String friendNumber) {
+        this.friendNumber = friendNumber;
     }
 }
