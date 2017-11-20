@@ -9,11 +9,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import android.widget.Toast;
 
 public class AddActivity extends AppCompatActivity {
 
     Button mResourceButton;
+    Button mHistoryButton;
     ImageButton mSettingsImageButton;
     ImageView mCupImageView;
     ImageView mPongImageView;
@@ -21,6 +31,14 @@ public class AddActivity extends AppCompatActivity {
     ImageView mShotImageView;
     ImageView mWineImageView;
     Context mContext;
+    TextView mBACTextView;
+
+    DatabaseReference mDatabase;
+    FirebaseAuth mAuth;
+    FirebaseUser currentUser;
+    DatabaseReference databaseUser;
+    User user;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +47,19 @@ public class AddActivity extends AppCompatActivity {
         mContext = this;
 
         mResourceButton = findViewById(R.id.resourceButton);
+        mHistoryButton = findViewById(R.id.historyButton);
         mSettingsImageButton = findViewById(R.id.settingsImageButton);
         mCupImageView = findViewById(R.id.cupImageView);
         mPongImageView = findViewById(R.id.pongImageView);
         mCanImageView = findViewById(R.id.canImageView);
         mShotImageView = findViewById(R.id.shotImageView);
         mWineImageView = findViewById(R.id.wineImageView);
+        mBACTextView = findViewById(R.id.bacTextView);
+
+
+        mDatabase = Utils.getDatabase().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
 
 
@@ -104,6 +129,24 @@ public class AddActivity extends AppCompatActivity {
         });
 
 
+        databaseUser = Utils.getDatabase().getReference("users").child(currentUser.getUid());
+
+        databaseUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                User user = getUser();
+                mBACTextView.setText(String.valueOf(user.getBac()));
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+
 
 
     }
@@ -130,5 +173,29 @@ public class AddActivity extends AppCompatActivity {
     public void onBACClick(View v) {
         Intent info = new Intent("INFO");
         startActivity(info);
+    }
+
+    public User getUser(){
+
+
+        databaseUser = Utils.getDatabase().getReference("users").child(currentUser.getUid());
+
+        databaseUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            User user;
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                user = dataSnapshot.getValue(User.class);
+
+                //mDatabase.child("users").child(currentUser.getUid()).setValue(user);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+        return user;
     }
 }

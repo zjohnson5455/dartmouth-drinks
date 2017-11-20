@@ -25,6 +25,10 @@ public class User {
         history = new ArrayList<>();
     }
 
+    public User(){
+
+    }
+
     public void addOnNight(OnNight night) {
         history.add(night);
     }
@@ -47,5 +51,25 @@ public class User {
 
     public double getBac() {
         return bac;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public void setMale(boolean male) {
+        this.male = male;
+    }
+
+    public void setBac(double bac) {
+        this.bac = bac;
     }
 }
