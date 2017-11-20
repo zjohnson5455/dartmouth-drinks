@@ -30,7 +30,7 @@ public class User {
         //this.number = number;
         timeOfLastCalc = new Date();
         settings = new Settings();
-        friendNumber = null;
+        friendNumber = "";
         bac = 0.0;
         history = list;
     }
