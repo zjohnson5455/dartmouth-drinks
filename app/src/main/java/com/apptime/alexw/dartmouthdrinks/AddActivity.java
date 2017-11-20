@@ -29,14 +29,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-//import com.google.android.gms.location.Geofence;
-//import com.google.android.gms.location.GeofencingClient;
-//import com.google.android.gms.location.GeofencingRequest;
-//import com.google.android.gms.location.LocationServices;
-//import com.google.android.gms.maps.model.LatLng;
-//import com.google.android.gms.tasks.OnCompleteListener;
-//import com.google.android.gms.tasks.Task;
-
 import android.widget.Toast;
 
 import java.text.Normalizer;
@@ -63,6 +55,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     DatabaseReference databaseUser;
+//    DatabaseReference datab
     User currentTimeUser;
 
 //    private ArrayList<Geofence> mGeofenceList;
@@ -91,13 +84,6 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
         mDatabase = Utils.getDatabase().getReference();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
-
-//        mGeofenceList = new ArrayList<>();
-//        mGeofencePendingIntent = null;
-//        mGeofencingClient = LocationServices.getGeofencingClient(this);
-//        populateGeofenceList();
-//
-//        addGeofences();
 
         start = getIntent().getBooleanExtra("Start night", false);
 
@@ -174,11 +160,8 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 currentTimeUser = dataSnapshot.getValue(User.class);
-
                 double bac = dataSnapshot.getValue(User.class).getBac();
-
                 String bacText = String.format("%.5f", bac);
-
                 mBACTextView.setText(bacText);
 
             }
@@ -196,10 +179,6 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
                 startActivity(history);
             }
         });
-
-
-
-
     }
 
     @Override
@@ -254,114 +233,36 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
         }
     }
 
-//    private GeofencingRequest getGeofencingRequest() {
-//        GeofencingRequest.Builder builder = new GeofencingRequest.Builder();
-//
-//        // The INITIAL_TRIGGER_ENTER flag indicates that geofencing service should trigger a
-//        // GEOFENCE_TRANSITION_ENTER notification when the geofence is added and if the device
-//        // is already inside that geofence.
-//        builder.setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_DWELL);
-//
-//        // Add the geofences to be monitored by geofencing service.
-//        builder.addGeofences(mGeofenceList);
-//
-//        // Return a GeofencingRequest.
-//        return builder.build();
-//    }
-
-//    private PendingIntent getGeofencePendingIntent() {
-//        // Reuse the PendingIntent if we already have it.
-//        if (mGeofencePendingIntent != null) {
-//            return mGeofencePendingIntent;
-//        }
-//        Intent intent = new Intent(this, GeofenceTransitionService.class);
-//        // We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling
-//        // addGeofences() and removeGeofences().
-//        return PendingIntent.getService(this, Constants.GEOFENCE_INTENT_REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//    }
-
-//    @SuppressWarnings("MissingPermission")
-//    private void addGeofences() {
-//        if (!checkPermissions()) {
-//            Toast.makeText(getApplicationContext(), "Location permissions needed to proceed", Toast.LENGTH_SHORT).show();
-//            requestPermissions();
-//            return;
-//        }
-//        mGeofencingClient.addGeofences(getGeofencingRequest(), getGeofencePendingIntent())
-//                .addOnSuccessListener(this, new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        Log.d("FENCE", "added fences");
-//                    }
-//                })
-//                .addOnFailureListener(this, new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.d("FENCE", "failed to add fences");
-//                        Log.e("FENCE ADD ERROR", e.getMessage());
-//                    }
-//                });
-//    }
-
-//    private void populateGeofenceList() {
-//
-//        mGeofenceList.add((new Geofence.Builder()
-//                // Set the request ID of the geofence. This is a string to identify this
-//                // geofence.
-//                .setRequestId("Cube")
-//
-//                // Set the circular region of this geofence.
-//                .setCircularRegion(
-//                        43.7044773 ,
-//                        -72.29093970000001 ,
-//                        100
-//                )
-//
-//                // Set the expiration duration of the geofence. This geofence gets automatically
-//                // removed after this period of time.
-//                .setExpirationDuration(100000000)
-//
-//                // Set the transition types of interest. Alerts are only generated for these
-//                // transition. We track entry, dwell, and exit transitions in this sample.
-//                .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER |
-//                        Geofence.GEOFENCE_TRANSITION_EXIT |
-//                        Geofence.GEOFENCE_TRANSITION_DWELL))
-//                .setLoiteringDelay(6000)
-//
-//                // Create the geofence.
-//                .build());
-//    }
-
     public void onBACClick(View v) {
         Intent info = new Intent("INFO");
         startActivity(info);
     }
 
-    private boolean checkPermissions() {
-        return ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED;
-    }
+//    private boolean checkPermissions() {
+//        return ContextCompat.checkSelfPermission(this,
+//                android.Manifest.permission.ACCESS_FINE_LOCATION)
+//                == PackageManager.PERMISSION_GRANTED;
+//    }
+//
+//
+//    private void requestPermissions() {
+//        ActivityCompat.requestPermissions(this,
+//                new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+//                Constants.PERMISSIONS_REQUEST_FINE_LOCATION);
+//    }
 
-
-    private void requestPermissions() {
-        ActivityCompat.requestPermissions(this,
-                new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                Constants.PERMISSIONS_REQUEST_FINE_LOCATION);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Intent intent = new Intent(mContext, AddActivity.class);
-            intent.putExtra("Start night", true);
-            startActivity(intent);
-        }
-        else {
-            Toast.makeText(getApplicationContext(), "Cannot proceed without location permission", Toast.LENGTH_SHORT).show();
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+//                                           @NonNull int[] grantResults) {
+//        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//            Intent intent = new Intent(mContext, AddActivity.class);
+//            intent.putExtra("Start night", true);
+//            startActivity(intent);
+//        }
+//        else {
+//            Toast.makeText(getApplicationContext(), "Cannot proceed without location permission", Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     @Override
     public void onDestroy(){
@@ -370,7 +271,10 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
     }
 
     @Override
-    public void onLocationChanged(Location location) {}
+    public void onLocationChanged(Location location) {
+
+
+    }
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {}
