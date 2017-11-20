@@ -74,17 +74,9 @@ public class GraphActivity extends AppCompatActivity {
                 }
 
                 graph.addSeries(series);
-//                graph.getGridLabelRenderer().setHorizontalLabelsVisible(true);
-                // activate horizontal zooming and scrolling
+                graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);
                 graph.getViewport().setScalable(true);
-
-                // activate horizontal scrolling
                 graph.getViewport().setScrollable(true);
-
-
-                //graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(getApplicationContext()));
-                //graph.getGridLabelRenderer().setNumHorizontalLabels(drinks.size()); // only 4 because of the space
-
 
             }
 

@@ -65,7 +65,7 @@ public class ForegroundService extends Service implements LocationListener {
     Map<OrganizedEvent, Boolean> notifiedMap;
 
     // constant
-    public static final long NOTIFY_INTERVAL = 2000; // 1 second
+    public static final long NOTIFY_INTERVAL = 5000;
     private static final int NOTIF_ID=1;
 
     // run on another Thread to avoid crash
