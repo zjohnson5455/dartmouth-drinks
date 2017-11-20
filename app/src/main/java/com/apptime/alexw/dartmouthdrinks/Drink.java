@@ -1,5 +1,7 @@
 package com.apptime.alexw.dartmouthdrinks;
 
+import java.util.Date;
+
 /**
  * Created by briantomasco on 11/18/17.
  */
@@ -7,14 +9,13 @@ package com.apptime.alexw.dartmouthdrinks;
 public class Drink {
 
     private String name;
-    private int time;
+    private Date time;
     private double prevBac;
-    private double postBac;
     private double amount;
     private double percent;
     private double alcohol;
 
-    public Drink (String name, int time, double bac, double amount, double percent){
+    public Drink (String name, Date time, double bac, double amount, double percent){
         this.name = name;
         this.time = time;
         this.prevBac = bac;
@@ -23,16 +24,11 @@ public class Drink {
         alcohol = Formulas.drinkAlcoholContent(amount, percent);
     }
 
-    public void calcPostBac (User user, int lastCalcTime){
-        //TODO: use instance variables to calculate bac after having drink
-
-    }
-
     public String getName() {
         return name;
     }
 
-    public int getTime() {
+    public Date getTime() {
         return time;
     }
 
