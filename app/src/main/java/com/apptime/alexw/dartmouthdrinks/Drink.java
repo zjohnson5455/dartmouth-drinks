@@ -9,7 +9,7 @@ import java.util.Date;
 public class Drink {
 
     private String name;
-    private Date time;
+    private long time;
     private double prevBac;
     private double amount;
     private double percent;
@@ -18,7 +18,7 @@ public class Drink {
 
     public Drink (String name, Date time, double bac, double amount, double percent){
         this.name = name;
-        this.time = time;
+        this.time = time.getTime();
         this.prevBac = bac;
         this.amount = amount;
         this.percent = percent;
@@ -35,7 +35,7 @@ public class Drink {
     }
 
     public Date getTime() {
-        return time;
+        return new Date(time);
     }
 
     public double getPrevBac() {

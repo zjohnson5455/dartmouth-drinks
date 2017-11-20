@@ -11,10 +11,10 @@ import java.util.List;
 public class OnNight {
 
     private List<Drink> drinkList;
-    private Date day;
+    private long day;
 
     public OnNight(Date day) {
-        this.day = day;
+        this.day = day.getTime();
         drinkList = new ArrayList<>();
     }
 
@@ -27,7 +27,7 @@ public class OnNight {
     }
 
     public Date getDay() {
-        return day;
+        return new Date (day);
     }
 
     public List<Drink> getDrinkList() {
