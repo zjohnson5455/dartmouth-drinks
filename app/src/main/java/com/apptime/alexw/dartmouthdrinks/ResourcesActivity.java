@@ -33,6 +33,8 @@ public class ResourcesActivity extends AppCompatActivity {
         stopService(service);
         Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
         startActivity(intent);
+        Intent result = new Intent("FINISH");
+        setResult(RESULT_OK, result);
         finish();
     }
 

@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -73,7 +74,6 @@ public class CreateAcctActivity extends AppCompatActivity {
             if (mPasswordEditText.getText().toString().length() < 6)
                 Toast.makeText(getApplicationContext(), "Password must be 6 characters long", Toast.LENGTH_SHORT).show();
             else {
-                Toast.makeText(getApplicationContext(), "Almost there...", Toast.LENGTH_SHORT).show();
                 mAuth.createUserWithEmailAndPassword(mEmailEditText.getText().toString(), mPasswordEditText.getText().toString())
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -93,6 +93,12 @@ public class CreateAcctActivity extends AppCompatActivity {
                                 }
 
 
+                            }
+                        })
+                        .addOnFailureListener(this, new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getApplicationContext(), "Could not authenticate: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
             }

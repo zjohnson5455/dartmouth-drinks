@@ -146,6 +146,9 @@ public class ForegroundService extends Service implements LocationListener {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        currentTimeUser.setBac(0.0);
+        currentTimeUser.setTimeOfLastCalc(new Date());
+        mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
         mTimer.cancel();
     }
 
@@ -164,7 +167,7 @@ public class ForegroundService extends Service implements LocationListener {
         //setting onGoing makes it persist after close
         Notification.Builder builder = new Notification.Builder(this)
                 .setContentTitle("You're having a night out!")
-                .setContentText("Your BAC is at " + BAC)
+                .setContentText("Your BAC is at " + String.format("%.4f",BAC))
                 .setSmallIcon(R.drawable.cup)
                 .setContentIntent(mainPendingIntent)
                 .setOngoing(true);

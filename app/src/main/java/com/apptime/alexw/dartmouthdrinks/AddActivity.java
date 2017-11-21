@@ -93,7 +93,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, ResourcesActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, Constants.RESOURCES_REQUEST_CODE);
             }
         });
 
@@ -220,7 +220,7 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
 
             if (start) {
                 currentNight = new OnNight(currentTime);
-                if (currentNight == null) currentNight.setDrinkList(new ArrayList<Drink>());
+                currentNight.setDrinkList(new ArrayList<Drink>());
                 start = false;
             }
             else {
@@ -235,6 +235,9 @@ public class AddActivity extends AppCompatActivity implements LocationListener {
 
             mDatabase.child("users").child(currentUser.getUid()).setValue(currentTimeUser);
 
+        }
+        else if (requestCode == Constants.RESOURCES_REQUEST_CODE && resultCode == RESULT_OK){
+            if (data.getAction().equals("FINISH")) finish();
         }
     }
 
