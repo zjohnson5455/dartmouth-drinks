@@ -17,6 +17,7 @@ public class Constants {
     static final int ADD_DRINK_REQUEST_CODE = 1;
     static final int TIME_REQUEST_CODE = 2;
     static final int RESOURCES_REQUEST_CODE = 3;
+    static final int SETTINGS_REQUEST_CODE = 4;
 
     static final int SERVICE_NOTIFICATION_CHANNEL = 11;
     static final int SERVICE_PUSH_NOTIFICATION_CHANNEL = 22;

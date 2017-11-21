@@ -1,6 +1,8 @@
 package com.apptime.alexw.dartmouthdrinks;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -27,15 +29,27 @@ public class ResourcesActivity extends AppCompatActivity {
 
     //secret way of stopping service. For debugging purposes
     public void onEmergencyClicked(View v) {
-        Intent service = new Intent();
-        Log.d("SERVVY", "Reached OnCLick");
-        service.setClass(getApplicationContext(), ForegroundService.class);
-        stopService(service);
-        Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
-        startActivity(intent);
-        Intent result = new Intent("FINISH");
-        setResult(RESULT_OK, result);
+        if (isMyServiceRunning(ForegroundService.class)) {
+            Intent service = new Intent();
+            Log.d("SERVVY", "Reached OnCLick");
+            service.setClass(getApplicationContext(), ForegroundService.class);
+            stopService(service);
+            Intent result = new Intent("FINISH");
+            setResult(RESULT_OK, result);
+            Intent welcome = new Intent(getApplicationContext(), WelcomeActivity.class);
+            startActivity(welcome);
+        }
         finish();
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

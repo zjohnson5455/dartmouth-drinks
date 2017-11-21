@@ -245,6 +245,7 @@ public class SettingsActivity extends AppCompatActivity {
                 mAuth.signOut();
                 Intent intent = new Intent(mContext, SignInActivity.class);
                 startActivity(intent);
+                setResult(RESULT_OK, new Intent("FINISH"));
                 finish();
 
             }

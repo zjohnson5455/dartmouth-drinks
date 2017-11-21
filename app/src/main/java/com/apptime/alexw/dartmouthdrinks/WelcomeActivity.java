@@ -118,7 +118,7 @@ public class WelcomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, SettingsActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, Constants.SETTINGS_REQUEST_CODE);
             }
         });
     }
@@ -244,4 +244,12 @@ public class WelcomeActivity extends AppCompatActivity {
     public void needPermissions(){
         Toast.makeText(getApplicationContext(), "Need permissions to continue", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == Constants.SETTINGS_REQUEST_CODE && resultCode == RESULT_OK){
+            if (data.getAction().equals("FINISH")) finish();
+        }
+    }
+
 }
